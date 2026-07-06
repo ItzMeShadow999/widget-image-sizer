@@ -455,13 +455,7 @@ button:disabled:hover {
     0 4px 16px rgba(88, 101, 242, 0.15);
 }
 
-/* ── Gear icon: gradient + glow on active ── */
-.advanced-toggle-btn svg {
-  display: block;
-  width: 16px;
-  height: 16px;
-}
-
+/* Default gear fill */
 .advanced-toggle-btn svg path {
   fill: currentColor;
   transition: fill 0.2s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s ease;
@@ -471,6 +465,7 @@ button:disabled:hover {
   transform: rotate(90deg);
 }
 
+/* Active gear: gradient fill + glow */
 .advanced-toggle-btn[aria-pressed="true"] svg {
   transform: rotate(180deg);
 }
