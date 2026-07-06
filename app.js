@@ -29,6 +29,8 @@ const previewImage = document.querySelector("#previewImage");
 const previewMeta = document.querySelector("#previewMeta");
 const localFileInput = document.querySelector("#localFileInput");
 const dropZone = document.querySelector("#dropZone");
+const urlInput = document.querySelector("#urlInput");
+const urlImportButton = document.querySelector("#urlImportButton");
 
 let lastResult = null;
 let previewBaseMeta = "";
@@ -189,6 +191,89 @@ function openFileDialog() {
     localFileInput.onchange = () => resolve(localFileInput.files?.[0] ?? null);
     localFileInput.click();
   });
+}
+
+function guessExtensionFromContentType(contentType) {
+  const subtype = contentType.split("/")[1]?.split(/[+;]/)[0]?.toLowerCase();
+  if (!subtype) return "png";
+  if (subtype === "jpg" || subtype === "jpeg") return "jpg";
+  if (["png", "gif", "webp"].includes(subtype)) return subtype;
+  return "png";
+}
+
+function fileNameFromUrl(url, contentType) {
+  let pathname = "image";
+  try {
+    pathname = new URL(url).pathname.split("/").pop() || "image";
+  } catch {
+    // fall back to the default name below
+  }
+  pathname = decodeURIComponent(pathname).split(/[?#]/)[0] || "image";
+
+  if (/\.(png|jpe?g|webp|gif)$/i.test(pathname)) {
+    return pathname;
+  }
+
+  const extension = guessExtensionFromContentType(contentType || "");
+  const stem = pathname.replace(/\.[^.]+$/, "") || "image";
+  return `${stem}.${extension}`;
+}
+
+async function fetchImageAsFile(rawUrl) {
+  let url;
+  try {
+    url = new URL(rawUrl);
+  } catch {
+    throw new Error("That doesn't look like a valid URL.");
+  }
+
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error("Only http(s) image URLs are supported.");
+  }
+
+  let response;
+  try {
+    response = await fetch(url.href, { mode: "cors", referrerPolicy: "no-referrer" });
+  } catch {
+    throw new Error("Could not fetch that URL. The site may block cross-origin requests.");
+  }
+
+  if (!response.ok) {
+    throw new Error(`The server responded with ${response.status} while fetching that URL.`);
+  }
+
+  const blob = await response.blob();
+  const contentType = blob.type || response.headers.get("content-type") || "";
+
+  if (contentType && !contentType.startsWith("image/")) {
+    throw new Error("That URL doesn't point to an image or GIF.");
+  }
+
+  const fileName = fileNameFromUrl(url.href, contentType);
+  return new File([blob], fileName, { type: contentType || "image/png" });
+}
+
+async function importImageFromUrl(rawUrl) {
+  const trimmed = (rawUrl || "").trim();
+  if (!trimmed) {
+    setStatus("Paste an image or GIF URL first.", "error");
+    return;
+  }
+
+  urlImportButton.disabled = true;
+  setStatus("", "neutral");
+  setPreviewLoading(true, "Fetching image from URL...");
+
+  try {
+    const file = await fetchImageAsFile(trimmed);
+    await handleSelectedFile(file);
+    urlInput.value = "";
+  } catch (error) {
+    setPreviewLoading(false);
+    setStatus(String(error?.message ?? error), "error");
+  } finally {
+    urlImportButton.disabled = false;
+  }
 }
 
 function setSelectedFile(file) {
@@ -443,6 +528,17 @@ browseButton.addEventListener("click", async () => {
   await handleSelectedFile(selected);
 });
 
+urlImportButton.addEventListener("click", async () => {
+  await importImageFromUrl(urlInput.value);
+});
+
+urlInput.addEventListener("keydown", async (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    await importImageFromUrl(urlInput.value);
+  }
+});
+
 ["dragenter", "dragover"].forEach((eventName) => {
   dropZone.addEventListener(eventName, (event) => {
     event.preventDefault();
@@ -461,6 +557,23 @@ dropZone.addEventListener("drop", async (event) => {
   const file = event.dataTransfer?.files?.[0];
   if (file) {
     await handleSelectedFile(file);
+    return;
+  }
+
+  // Dragging an <img> from a webpage (or another tab) carries no File —
+  // just a URL as text, under one of these MIME types depending on the browser.
+  const draggedUrl =
+    event.dataTransfer?.getData("text/uri-list") ||
+    event.dataTransfer?.getData("text/plain") ||
+    "";
+
+  const firstUrl = draggedUrl
+    .split("\n")
+    .map((line) => line.trim())
+    .find((line) => line && !line.startsWith("#"));
+
+  if (firstUrl) {
+    await importImageFromUrl(firstUrl);
   }
 });
 
