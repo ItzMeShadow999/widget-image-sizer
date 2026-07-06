@@ -37,7 +37,7 @@ input, button {
   font: inherit;
 }
 
-/* ── Inputs (Glass) ── */
+
 input {
   width: 100%;
   background: rgba(24, 24, 27, 0.6);
@@ -77,7 +77,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-/* ── Glassmorphism Base Button ── */
+
 button {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
@@ -118,7 +118,7 @@ button:focus-visible {
   box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.4);
 }
 
-/* ── Primary Button (Glass Blurple) ── */
+
 button.primary {
   position: relative;
   overflow: hidden;
@@ -150,7 +150,7 @@ button.primary:hover {
     0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* The Dash Animation */
+
 button.primary::after {
   content: "";
   position: absolute;
@@ -425,7 +425,7 @@ button:disabled:hover {
   }
 }
 
-/* ── Gear Icon Box (Glass) ── */
+
 .advanced-toggle-btn {
   width: 38px;
   height: 38px;
@@ -458,7 +458,7 @@ button:disabled:hover {
     0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* Box keeps subtle blurple tint when active; gear stays neutral */
+
 .advanced-toggle-btn[aria-pressed="true"] {
   background: rgba(88, 101, 242, 0.08);
   border-color: rgba(88, 101, 242, 0.30);
@@ -467,7 +467,7 @@ button:disabled:hover {
     0 4px 16px rgba(88, 101, 242, 0.15);
 }
 
-/* ── Gear icon: light blue, blurple gradient when active ── */
+
 .advanced-toggle-btn svg {
   display: block;
   width: 16px;
@@ -479,12 +479,11 @@ button:disabled:hover {
   transition: fill 0.3s ease;
 }
 
-/* Gradient fill once the panel is toggled open/active */
 .advanced-toggle-btn[aria-pressed="true"] svg path {
   fill: url(#gearGradient);
 }
 
-/* Spin once, triggered via JS class toggle (on hover-in and on click) */
+
 .advanced-toggle-btn svg.spin-once {
   animation: spin 0.6s linear 1;
 }
