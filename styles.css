@@ -358,7 +358,7 @@ button:disabled:hover {
 .toolbar {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) 120px 120px auto;
-  align-items: center;
+  align-items: end;
   gap: 10px;
 }
 
@@ -387,6 +387,18 @@ button:disabled:hover {
   display: flex;
   gap: 6px;
   min-width: 0;
+}
+
+.toolbar-item-image .row-url {
+  margin-top: 6px;
+}
+
+.toolbar-item-image .row-url input {
+  font-size: 12px;
+}
+
+.toolbar-item-image .row-url button {
+  min-width: 92px;
 }
 
 .toolbar-item-image input {
