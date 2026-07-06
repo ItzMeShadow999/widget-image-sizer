@@ -438,7 +438,7 @@ button:disabled:hover {
 }
 
 .advanced-toggle-btn:hover {
-  color: #7c3aed;
+  color: #71717a;
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.18);
   box-shadow:
@@ -446,7 +446,7 @@ button:disabled:hover {
     0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* Box gets subtle blurple tint when active */
+/* Box keeps subtle blurple tint when active; gear stays neutral */
 .advanced-toggle-btn[aria-pressed="true"] {
   background: rgba(88, 101, 242, 0.08);
   border-color: rgba(88, 101, 242, 0.30);
@@ -455,24 +455,24 @@ button:disabled:hover {
     0 4px 16px rgba(88, 101, 242, 0.15);
 }
 
-/* Default gear fill */
+/* ── Gear icon: NO colour, NO glow ── */
+.advanced-toggle-btn svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
 .advanced-toggle-btn svg path {
   fill: currentColor;
-  transition: fill 0.2s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s ease;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .advanced-toggle-btn:hover svg {
   transform: rotate(90deg);
 }
 
-/* Active gear: gradient fill + glow */
 .advanced-toggle-btn[aria-pressed="true"] svg {
   transform: rotate(180deg);
-}
-
-.advanced-toggle-btn[aria-pressed="true"] svg path {
-  fill: url(#gearGradient);
-  filter: drop-shadow(0 0 2px #ADD8E6) drop-shadow(0 0 6px rgba(88, 101, 242, 0.6));
 }
 
 .advanced-panel {
