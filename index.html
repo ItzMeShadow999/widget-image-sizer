@@ -107,7 +107,7 @@
 
         function spinOnce() {
           gearSvg.classList.remove('spin-once');
-          // force reflow so the animation can restart even if it's already mid-way or just finished
+
           void gearSvg.offsetWidth;
           gearSvg.classList.add('spin-once');
         }
