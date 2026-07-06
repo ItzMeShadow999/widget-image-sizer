@@ -455,7 +455,7 @@ button:disabled:hover {
     0 4px 16px rgba(88, 101, 242, 0.15);
 }
 
-/* ── Gear icon: NO colour, NO glow ── */
+/* ── Gear icon: light blue, blurple gradient when active ── */
 .advanced-toggle-btn svg {
   display: block;
   width: 16px;
@@ -463,16 +463,24 @@ button:disabled:hover {
 }
 
 .advanced-toggle-btn svg path {
-  fill: currentColor;
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  fill: #ADD8E6;
+  transition: fill 0.3s ease;
 }
 
+/* Gradient fill once the panel is toggled open/active */
+.advanced-toggle-btn[aria-pressed="true"] svg path {
+  fill: url(#gearGradient);
+}
+
+/* Spin on hover */
 .advanced-toggle-btn:hover svg {
-  transform: rotate(90deg);
+  animation: spin 0.6s linear infinite;
 }
 
+/* Spin on click/active, and keep spinning while active */
+.advanced-toggle-btn:active svg,
 .advanced-toggle-btn[aria-pressed="true"] svg {
-  transform: rotate(180deg);
+  animation: spin 0.6s linear infinite;
 }
 
 .advanced-panel {
