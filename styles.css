@@ -15,35 +15,35 @@ html, body {
 body {
   height: 100vh;
   font-family: Lexend, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background-color: #16171a;
+  background-color: #1a1a1a;
   background-image: radial-gradient(
     110% 130% at 100% 0%,
-    rgba(45, 47, 72, 0.8) 0%,
-    rgba(30, 31, 45, 0.4) 45%,
-    rgba(22, 23, 26, 0) 100%
+    rgba(60, 60, 60, 0.6) 0%,
+    rgba(40, 40, 40, 0.3) 45%,
+    rgba(26, 26, 26, 0) 100%
   );
-  color: #dbdee1;
+  color: #c0c0c0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
 
 ::selection {
-  background: #a78bfa33;
-  color: #fafafa;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
 }
 
 input, button {
   font: inherit;
 }
 
-/* ── Inputs (Glass) ── */
+/* ── Inputs ── */
 input {
   width: 100%;
-  background: rgba(24, 24, 27, 0.6);
+  background: rgba(30, 30, 30, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: #fafafa;
+  color: #e0e0e0;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 9px 12px;
@@ -53,18 +53,18 @@ input {
 }
 
 input::placeholder {
-  color: #3f3f46;
+  color: #555555;
 }
 
 input:focus {
-  border-color: rgba(167, 139, 250, 0.4);
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.15);
-  background: rgba(24, 24, 27, 0.8);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+  background: rgba(30, 30, 30, 0.8);
 }
 
 input[readonly] {
   cursor: default;
-  color: #a1a1aa;
+  color: #888888;
 }
 
 input[type="number"] {
@@ -77,16 +77,16 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-/* ── Glassmorphism Base Button ── */
+/* ── Base Button ── */
 button {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
   padding: 9px 16px;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
-  color: #dbdee1;
+  color: #c0c0c0;
   font-size: 13px;
   font-weight: 500;
   outline: none;
@@ -97,7 +97,7 @@ button {
   white-space: nowrap;
   flex-shrink: 0;
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04),
     0 4px 16px rgba(0, 0, 0, 0.25),
     0 1px 2px rgba(0, 0, 0, 0.3);
   min-width: 108px;
@@ -105,48 +105,48 @@ button {
 }
 
 button:hover {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.16);
   color: #ffffff;
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
     0 6px 20px rgba(0, 0, 0, 0.30),
     0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 button:focus-visible {
-  box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
-/* ── Primary Button (Glass Blurple) ── */
+/* ── Primary Button ── */
 button.primary {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(88, 101, 242, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   background: linear-gradient(
     180deg,
-    rgba(88, 101, 242, 0.25) 0%,
-    rgba(71, 82, 196, 0.35) 100%
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.05) 100%
   );
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   color: #ffffff;
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.12),
-    0 4px 20px rgba(88, 101, 242, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    0 4px 20px rgba(0, 0, 0, 0.25),
     0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 button.primary:hover {
   background: linear-gradient(
     180deg,
-    rgba(103, 115, 244, 0.32) 0%,
-    rgba(83, 95, 205, 0.42) 100%
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.08) 100%
   );
-  border-color: rgba(103, 115, 244, 0.45);
+  border-color: rgba(255, 255, 255, 0.22);
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.14),
-    0 6px 24px rgba(88, 101, 242, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.10),
+    0 6px 24px rgba(0, 0, 0, 0.30),
     0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -158,7 +158,7 @@ button.primary::after {
   left: -100%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
   transform: skewX(-25deg);
   transition: 0.6s;
   pointer-events: none;
@@ -175,7 +175,7 @@ button:disabled {
 
 button:disabled:hover {
   background: rgba(255, 255, 255, 0.03);
-  color: #a1a1aa;
+  color: #888888;
   border-color: rgba(255, 255, 255, 0.06);
 }
 
@@ -202,12 +202,12 @@ button:disabled:hover {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #fafafa;
+  color: #f0f0f0;
 }
 
 .titlebar-status {
   font-size: 11px;
-  color: #71717a;
+  color: #666666;
   margin-left: 4px;
   white-space: nowrap;
   overflow: hidden;
@@ -232,22 +232,22 @@ button:disabled:hover {
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 12px;
-  background: rgba(12, 12, 15, 0.6);
+  background: rgba(15, 15, 15, 0.6);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
   position: relative;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .preview-wrap.drag-over {
-  border-color: #7c3aed;
-  background: rgba(18, 12, 31, 0.6);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(20, 20, 20, 0.6);
 }
 
 .preview-empty {
-  color: #3f3f46;
+  color: #444444;
   font-size: 13px;
   user-select: none;
   text-align: center;
@@ -258,7 +258,7 @@ button:disabled:hover {
   display: inline-block;
   margin-top: 6px;
   font-size: 11px;
-  color: #27272a;
+  color: #333333;
   letter-spacing: 0.04em;
 }
 
@@ -270,10 +270,10 @@ button:disabled:hover {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  background: rgba(12, 12, 15, 0.82);
+  background: rgba(12, 12, 12, 0.82);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: #d4d4d8;
+  color: #aaaaaa;
   font-size: 13px;
   z-index: 2;
 }
@@ -281,8 +281,8 @@ button:disabled:hover {
 .spinner {
   width: 28px;
   height: 28px;
-  border: 2px solid #27272a;
-  border-top-color: #8b5cf6;
+  border: 2px solid #333333;
+  border-top-color: #888888;
   border-radius: 999px;
   animation: spin 0.8s linear infinite;
 }
@@ -297,7 +297,7 @@ button:disabled:hover {
   width: 100%;
   height: 8px;
   border-radius: 999px;
-  background: #27272a;
+  background: #333333;
   overflow: hidden;
 }
 
@@ -305,14 +305,14 @@ button:disabled:hover {
   width: 0%;
   height: 100%;
   border-radius: inherit;
-  background: #8b5cf6;
+  background: #888888;
   transition: width 0.18s ease;
 }
 
 .progress-label {
   text-align: center;
   font-size: 12px;
-  color: #e4e4e7;
+  color: #cccccc;
 }
 
 .preview-image {
@@ -323,10 +323,10 @@ button:disabled:hover {
   object-fit: contain;
   object-position: center;
   background:
-    linear-gradient(45deg, #141417 25%, transparent 25%),
-    linear-gradient(-45deg, #141417 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #141417 75%),
-    linear-gradient(-45deg, transparent 75%, #141417 75%);
+    linear-gradient(45deg, #141414 25%, transparent 25%),
+    linear-gradient(-45deg, #141414 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #141414 75%),
+    linear-gradient(-45deg, transparent 75%, #141414 75%);
   background-size: 16px 16px;
   background-position: 0 0, 0 8px, 8px -8px, -8px 0;
 }
@@ -338,8 +338,8 @@ button:disabled:hover {
   right: 0;
   padding: 8px 14px;
   font-size: 12px;
-  color: #a1a1aa;
-  background: linear-gradient(transparent, rgba(9, 9, 11, 0.87));
+  color: #888888;
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.87));
   pointer-events: none;
 }
 
@@ -373,7 +373,7 @@ button:disabled:hover {
 .toolbar-item label {
   font-size: 11px;
   font-weight: 500;
-  color: #a1a1aa;
+  color: #888888;
   letter-spacing: 0.01em;
   white-space: nowrap;
   padding-left: 2px;
@@ -413,7 +413,7 @@ button:disabled:hover {
   }
 }
 
-/* ── Gear Icon Box (Glass) ── */
+/* ── Gear Icon Box ── */
 .advanced-toggle-btn {
   width: 38px;
   height: 38px;
@@ -421,9 +421,9 @@ button:disabled:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #52525b;
+  color: #555555;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -433,46 +433,42 @@ button:disabled:hover {
   flex: 0 0 auto;
   min-width: 0;
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04),
     0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .advanced-toggle-btn:hover {
-  color: #7c3aed;
+  color: #aaaaaa;
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.14);
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
     0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* Box gets subtle blurple tint when active */
 .advanced-toggle-btn[aria-pressed="true"] {
-  background: rgba(88, 101, 242, 0.08);
-  border-color: rgba(88, 101, 242, 0.30);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.20);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.06),
-    0 4px 16px rgba(88, 101, 242, 0.15);
+    0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Default gear fill */
 .advanced-toggle-btn svg path {
   fill: currentColor;
-  transition: fill 0.2s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s ease;
+  transition: fill 0.2s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .advanced-toggle-btn:hover svg {
   transform: rotate(90deg);
 }
 
-/* Active gear: gradient fill + glow */
 .advanced-toggle-btn[aria-pressed="true"] svg {
   transform: rotate(180deg);
 }
 
 .advanced-toggle-btn[aria-pressed="true"] svg path {
-  fill: url(#gearGradient);
-  filter: drop-shadow(0 0 2px #ADD8E6) drop-shadow(0 0 6px rgba(88, 101, 242, 0.6));
+  fill: #cccccc;
 }
 
 .advanced-panel {
@@ -506,7 +502,7 @@ button:disabled:hover {
 
 .advanced-label {
   font-size: 12px;
-  color: #a1a1aa;
+  color: #888888;
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
@@ -529,7 +525,7 @@ button:disabled:hover {
 .toggle-slider {
   position: absolute;
   inset: 0;
-  background: #18181b;
+  background: #222222;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.05);
@@ -543,16 +539,16 @@ button:disabled:hover {
   height: 18px;
   left: 3px;
   top: 2px;
-  background: #a1a1aa;
+  background: #777777;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 -1px 1px rgba(0,0,0,0.2);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.4);
 }
 
 .toggle-switch input:checked + .toggle-slider {
-  background: #22c55e;
+  background: #444444;
   border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 8px rgba(34, 197, 94, 0.3);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 8px rgba(255, 255, 255, 0.1);
 }
 
 .toggle-switch input:checked + .toggle-slider::before {
@@ -582,16 +578,16 @@ button:disabled:hover {
   flex-shrink: 0;
   padding: 0;
   font-size: 12px;
-  color: #a1a1aa;
+  color: #888888;
   line-height: 1.5;
   min-height: 0;
   transition: color 0.2s ease;
 }
 
 .status[data-tone="success"] {
-  color: #6ee7b7;
+  color: #bbbbbb;
 }
 
 .status[data-tone="error"] {
-  color: #fca5a5;
+  color: #bbbbbb;
 }
