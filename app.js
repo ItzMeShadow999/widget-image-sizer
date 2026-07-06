@@ -637,3 +637,4 @@ window.addEventListener("beforeunload", () => {
 
 clearPreview();
 setStatus("", "neutral");
+
