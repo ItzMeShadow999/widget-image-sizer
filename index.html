@@ -3,30 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>W.I.S. — Widget Image Sizer</title>
-    <meta name="description" content="Frame Discord widget images — static or animated GIF — right in your browser." />
+    <title>W.I.S. — Widget Image Studio</title>
+    <meta name="description" content="Widget Framer, File Converter and Advanced Image Editor — all in your browser." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body data-runtime="browser">
-    <main class="app">
+
+  <body>
+    <div class="app">
+
+      
       <header class="titlebar">
         <span class="titlebar-brand">W.I.S.</span>
-        <span id="titlebarStatus" class="titlebar-status">Waiting for an image.</span>
+        <div class="titlebar-sep"></div>
+        <span id="titlebarStatus">Waiting for an image.</span>
       </header>
 
-      <div class="content">
+      
+      <nav class="main-tabs" role="tablist" aria-label="Tool panels">
+        <button class="tab-button" role="tab" aria-selected="true"  data-tab="framer">Widget Framer</button>
+        <button class="tab-button" role="tab" aria-selected="false" data-tab="converter">File Converter</button>
+        <button class="tab-button" role="tab" aria-selected="false" data-tab="advanced">Advanced Editor</button>
+      </nav>
+
+      
+      
+      
+      <section id="framerPanel" role="tabpanel" aria-label="Widget Framer">
+
+        
         <section id="dropZone" class="preview-wrap" aria-label="Image preview">
-          <div id="previewEmpty" class="preview-empty">Drop or select an image<br /><span class="preview-empty-sub">PNG, JPG, WEBP, GIF — or drag/paste a URL</span></div>
+          <div id="previewEmpty" class="preview-empty">
+            Drop or paste a file here
+            <span class="preview-empty-sub">PNG · JPG · WEBP · GIF — or drag/paste a URL</span>
+          </div>
           <div id="previewLoading" class="preview-loading" hidden>
             <div class="spinner" aria-hidden="true"></div>
-            <span id="previewLoadingText">Loading preview...</span>
+            <span id="previewLoadingText">Loading preview…</span>
             <div id="progressWrap" class="progress-wrap" hidden>
-              <div class="progress-track">
-                <div id="progressBar" class="progress-bar"></div>
-              </div>
+              <div class="progress-track"><div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div>
               <span id="progressLabel" class="progress-label">0%</span>
             </div>
           </div>
@@ -34,84 +51,684 @@
           <div id="previewMeta" class="preview-meta"></div>
         </section>
 
-        <div class="controls">
-          <div class="toolbar">
-            <div class="toolbar-item toolbar-item-image">
-              <label for="inputPath">Image</label>
-              <div class="row">
-                <input id="inputPath" type="text" readonly placeholder="Choose a PNG, JPG, WEBP, or GIF" />
-                <button id="browseButton" type="button">Browse</button>
+        
+        <div class="framer-layout">
+
+          
+          <div>
+            <div class="section-divider"><span class="section-divider-line"></span><span class="section-divider-label">Source</span><span class="section-divider-line"></span></div>
+            <div class="framer-source-inputs">
+              <div class="framer-source-row">
+                <input id="inputPath" class="input" type="text" readonly placeholder="Choose a PNG, JPG, WEBP, or GIF" />
+                <button id="browseButton" class="btn" type="button">Browse</button>
               </div>
-              <div class="row row-url">
-                <input id="urlInput" type="text" placeholder="Or paste an image/GIF URL…" />
-                <button id="urlImportButton" type="button">Import URL</button>
+              <div class="framer-source-row">
+                <input id="urlInput" class="input" type="text" placeholder="Or paste an image / GIF URL…" />
+                <button id="urlImportButton" class="btn" type="button">Import URL</button>
               </div>
-            </div>
-
-            <div class="toolbar-item toolbar-item-output">
-              <label for="outputName">Output name</label>
-              <input id="outputName" type="text" placeholder="image-resized.png" />
-            </div>
-
-            <div class="toolbar-item toolbar-item-number">
-              <label for="topStrip">Top strip</label>
-              <input id="topStrip" type="number" min="0" placeholder="Auto" />
-            </div>
-
-            <div class="toolbar-item toolbar-item-number">
-              <label for="radius">Radius</label>
-              <input id="radius" type="number" min="0" placeholder="Auto" />
-            </div>
-
-            <div class="control-actions">
-              <button id="downloadButton" type="button" disabled>Download</button>
-              <button id="processButton" class="primary" type="button">Generate</button>
-              <button id="advancedToggleBtn" type="button" class="advanced-toggle-btn" aria-label="Advanced settings" title="Advanced settings">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="gearGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#ADD8E6"/>
-                      <stop offset="100%" stop-color="#5865f2"/>
-                    </linearGradient>
-                  </defs>
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M13.9838 2.54161C14.0711 2.71093 14.0928 2.92777 14.1361 3.36144C14.2182 4.1823 14.2593 4.59274 14.4311 4.81793C14.649 5.10358 15.0034 5.25038 15.3595 5.20248C15.6402 5.16472 15.9594 4.90352 16.5979 4.38113C16.9352 4.10515 17.1038 3.96716 17.2853 3.90918C17.5158 3.83555 17.7652 3.84798 17.9872 3.94419C18.162 4.01994 18.3161 4.17402 18.6243 4.4822L19.5178 5.37567C19.8259 5.68385 19.98 5.83794 20.0558 6.01275C20.152 6.23478 20.1644 6.48415 20.0908 6.71464C20.0328 6.89612 19.8948 7.06478 19.6188 7.4021C19.0964 8.0406 18.8352 8.35984 18.7975 8.64056C18.7496 8.99662 18.8964 9.35102 19.182 9.56893C19.4072 9.74072 19.8176 9.78176 20.6385 9.86385C21.0722 9.90722 21.2891 9.92891 21.4584 10.0162C21.6734 10.1272 21.841 10.3123 21.9299 10.5373C22 10.7145 22 10.9324 22 11.3682V12.6319C22 13.0676 22 13.2855 21.93 13.4626C21.841 13.6877 21.6734 13.8729 21.4583 13.9838C21.289 14.0711 21.0722 14.0928 20.6386 14.1361L20.6386 14.1361C19.818 14.2182 19.4077 14.2592 19.1825 14.4309C18.8967 14.6489 18.7499 15.0034 18.7979 15.3596C18.8357 15.6402 19.0968 15.9593 19.619 16.5976C19.8949 16.9348 20.0328 17.1034 20.0908 17.2848C20.1645 17.5154 20.152 17.7648 20.0558 17.9869C19.98 18.1617 19.826 18.3157 19.5179 18.6238L18.6243 19.5174C18.3162 19.8255 18.1621 19.9796 17.9873 20.0554C17.7652 20.1516 17.5159 20.164 17.2854 20.0904C17.1039 20.0324 16.9352 19.8944 16.5979 19.6184L16.5979 19.6184C15.9594 19.096 15.6402 18.8348 15.3595 18.7971C15.0034 18.7492 14.649 18.896 14.4311 19.1816C14.2593 19.4068 14.2183 19.8173 14.1362 20.6383C14.0928 21.0722 14.0711 21.2891 13.9837 21.4585C13.8728 21.6735 13.6877 21.8409 13.4628 21.9299C13.2856 22 13.0676 22 12.6316 22H11.3682C10.9324 22 10.7145 22 10.5373 21.9299C10.3123 21.841 10.1272 21.6734 10.0162 21.4584C9.92891 21.2891 9.90722 21.0722 9.86385 20.6385C9.78176 19.8176 9.74072 19.4072 9.56892 19.182C9.35101 18.8964 8.99663 18.7496 8.64057 18.7975C8.35985 18.8352 8.04059 19.0964 7.40208 19.6189L7.40206 19.6189C7.06473 19.8949 6.89607 20.0329 6.71458 20.0908C6.4841 20.1645 6.23474 20.152 6.01272 20.0558C5.8379 19.9801 5.6838 19.826 5.37561 19.5178L4.48217 18.6243C4.17398 18.3162 4.01988 18.1621 3.94414 17.9873C3.84794 17.7652 3.8355 17.5159 3.90913 17.2854C3.96711 17.1039 4.10511 16.9352 4.3811 16.5979C4.90351 15.9594 5.16471 15.6402 5.20247 15.3594C5.25037 15.0034 5.10357 14.649 4.81792 14.4311C4.59273 14.2593 4.1823 14.2182 3.36143 14.1361C2.92776 14.0928 2.71093 14.0711 2.54161 13.9838C2.32656 13.8728 2.15902 13.6877 2.07005 13.4627C2 13.2855 2 13.0676 2 12.6318V11.3683C2 10.9324 2 10.7144 2.07008 10.5372C2.15905 10.3123 2.32654 10.1272 2.54152 10.0163C2.71088 9.92891 2.92777 9.90722 3.36155 9.86384H3.36155H3.36156C4.18264 9.78173 4.59319 9.74068 4.81842 9.56881C5.10395 9.35092 5.2507 8.99664 5.20287 8.64066C5.16514 8.35987 4.90385 8.04052 4.38128 7.40182C4.10516 7.06435 3.96711 6.89561 3.90914 6.71405C3.83557 6.48364 3.848 6.23438 3.94413 6.01243C4.01988 5.83754 4.17403 5.68339 4.48233 5.37509L5.37565 4.48177L5.37566 4.48177C5.68385 4.17357 5.83795 4.01947 6.01277 3.94373C6.23478 3.84753 6.48414 3.8351 6.71463 3.90872C6.89612 3.9667 7.06481 4.10472 7.4022 4.38076C8.04061 4.9031 8.35982 5.16427 8.64044 5.20207C8.99661 5.25003 9.35113 5.10319 9.56907 4.81742C9.74077 4.59227 9.78181 4.18195 9.86387 3.36131C9.90722 2.92776 9.9289 2.71098 10.0162 2.5417C10.1271 2.32658 10.3123 2.15898 10.5374 2.07001C10.7145 2 10.9324 2 11.3681 2H12.6318C13.0676 2 13.2855 2 13.4627 2.07005C13.6877 2.15902 13.8728 2.32656 13.9838 2.54161ZM12 16.75C14.6234 16.75 16.75 14.6234 16.75 12C16.75 9.37665 14.6234 7.25 12 7.25C9.37665 7.25 7.25 9.37665 7.25 12C7.25 14.6234 9.37665 16.75 12 16.75Z" fill="currentColor"/>
-                </svg>
-              </button>
             </div>
           </div>
 
-          <div id="advancedPanel" class="advanced-panel">
-            <div class="advanced-panel-inner">
-              <label class="advanced-item" for="highQualityAnimated">
-                <span class="advanced-label">High quality animated output</span>
-                <div class="toggle-switch">
-                  <input id="highQualityAnimated" type="checkbox" checked />
-                  <span class="toggle-slider"></span>
+          
+          <div>
+            <div class="section-divider"><span class="section-divider-line"></span><span class="section-divider-label">Output</span><span class="section-divider-line"></span></div>
+            <div class="framer-controls">
+
+              
+              <div class="framer-output-block">
+                <div class="field-label">Filename &amp; format</div>
+                <div class="framer-output-inner">
+                  <input id="outputName" class="input" type="text" placeholder="image-resized.png" />
+                  
+                  <select id="outputFormat" class="conv-format-select" style="display:none" aria-hidden="true">
+                    <option value="png">PNG</option>
+                    <option value="jpg">JPG</option>
+                    <option value="webp">WEBP</option>
+                    <option value="gif">GIF</option>
+                  </select>
                 </div>
-              </label>
+                
+                <div id="formatChips" class="format-chips" role="group" aria-label="Output format">
+                  <span class="format-chip active" data-format="png" tabindex="0" role="button" aria-pressed="true">PNG</span>
+                  <span class="format-chip" data-format="jpg"  tabindex="0" role="button" aria-pressed="false">JPG</span>
+                  <span class="format-chip" data-format="webp" tabindex="0" role="button" aria-pressed="false">WEBP</span>
+                  <span class="format-chip" data-format="gif"  tabindex="0" role="button" aria-pressed="false">GIF</span>
+                </div>
+              </div>
+
+              
+              <div class="field">
+                <label class="field-label" for="topStrip">Top strip</label>
+                <input id="topStrip" class="input" type="number" min="0" placeholder="Auto" />
+              </div>
+
+              
+              <div class="field">
+                <label class="field-label" for="radius">Radius</label>
+                <input id="radius" class="input" type="number" min="0" placeholder="Auto" />
+              </div>
+
+              
+              <div class="framer-actions">
+                <button id="downloadButton" class="btn" type="button" disabled>Download</button>
+                <button id="processButton" class="btn btn-primary" type="button">Generate</button>
+                
+                <button id="advancedToggleBtn" class="gear-btn" type="button" aria-pressed="false" aria-label="Advanced settings" title="Advanced settings">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="gearGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#a5b4fc"/>
+                        <stop offset="100%" stop-color="#5865f2"/>
+                      </linearGradient>
+                    </defs>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.9838 2.54161C14.0711 2.71093 14.0928 2.92777 14.1361 3.36144C14.2182 4.1823 14.2593 4.59274 14.4311 4.81793C14.649 5.10358 15.0034 5.25038 15.3595 5.20248C15.6402 5.16472 15.9594 4.90352 16.5979 4.38113C16.9352 4.10515 17.1038 3.96716 17.2853 3.90918C17.5158 3.83555 17.7652 3.84798 17.9872 3.94419C18.162 4.01994 18.3161 4.17402 18.6243 4.4822L19.5178 5.37567C19.8259 5.68385 19.98 5.83794 20.0558 6.01275C20.152 6.23478 20.1644 6.48415 20.0908 6.71464C20.0328 6.89612 19.8948 7.06478 19.6188 7.4021C19.0964 8.0406 18.8352 8.35984 18.7975 8.64056C18.7496 8.99662 18.8964 9.35102 19.182 9.56893C19.4072 9.74072 19.8176 9.78176 20.6385 9.86385C21.0722 9.90722 21.2891 9.92891 21.4584 10.0162C21.6734 10.1272 21.841 10.3123 21.9299 10.5373C22 10.7145 22 10.9324 22 11.3682V12.6319C22 13.0676 22 13.2855 21.93 13.4626C21.841 13.6877 21.6734 13.8729 21.4583 13.9838C21.289 14.0711 21.0722 14.0928 20.6386 14.1361C19.818 14.2182 19.4077 14.2592 19.1825 14.4309C18.8967 14.6489 18.7499 15.0034 18.7979 15.3596C18.8357 15.6402 19.0968 15.9593 19.619 16.5976C19.8949 16.9348 20.0328 17.1034 20.0908 17.2848C20.1645 17.5154 20.152 17.7648 20.0558 17.9869C19.98 18.1617 19.826 18.3157 19.5179 18.6238L18.6243 19.5174C18.3162 19.8255 18.1621 19.9796 17.9873 20.0554C17.7652 20.1516 17.5159 20.164 17.2854 20.0904C17.1039 20.0324 16.9352 19.8944 16.5979 19.6184C15.9594 19.096 15.6402 18.8348 15.3595 18.7971C15.0034 18.7492 14.649 18.896 14.4311 19.1816C14.2593 19.4068 14.2183 19.8173 14.1362 20.6383C14.0928 21.0722 14.0711 21.2891 13.9837 21.4585C13.8728 21.6735 13.6877 21.8409 13.4628 21.9299C13.2856 22 13.0676 22 12.6316 22H11.3682C10.9324 22 10.7145 22 10.5373 21.9299C10.3123 21.841 10.1272 21.6734 10.0162 21.4584C9.92891 21.2891 9.90722 21.0722 9.86385 20.6385C9.78176 19.8176 9.74072 19.4072 9.56892 19.182C9.35101 18.8964 8.99663 18.7496 8.64057 18.7975C8.35985 18.8352 8.04059 19.0964 7.40208 19.6189C7.06473 19.8949 6.89607 20.0329 6.71458 20.0908C6.4841 20.1645 6.23474 20.152 6.01272 20.0558C5.8379 19.9801 5.6838 19.826 5.37561 19.5178L4.48217 18.6243C4.17398 18.3162 4.01988 18.1621 3.94414 17.9873C3.84794 17.7652 3.8355 17.5159 3.90913 17.2854C3.96711 17.1039 4.10511 16.9352 4.3811 16.5979C4.90351 15.9594 5.16471 15.6402 5.20247 15.3594C5.25037 15.0034 5.10357 14.649 4.81792 14.4311C4.59273 14.2593 4.1823 14.2182 3.36143 14.1361C2.92776 14.0928 2.71093 14.0711 2.54161 13.9838C2.32656 13.8728 2.15902 13.6877 2.07005 13.4627C2 13.2855 2 13.0676 2 12.6318V11.3683C2 10.9324 2 10.7144 2.07008 10.5372C2.15905 10.3123 2.32654 10.1272 2.54152 10.0163C2.71088 9.92891 2.92777 9.90722 3.36155 9.86384C4.18264 9.78173 4.59319 9.74068 4.81842 9.56881C5.10395 9.35092 5.2507 8.99664 5.20287 8.64066C5.16514 8.35987 4.90385 8.04052 4.38128 7.40182C4.10516 7.06435 3.96711 6.89561 3.90914 6.71405C3.83557 6.48364 3.848 6.23438 3.94413 6.01243C4.01988 5.83754 4.17403 5.68339 4.48233 5.37509L5.37565 4.48177C5.68385 4.17357 5.83795 4.01947 6.01277 3.94373C6.23478 3.84753 6.48414 3.8351 6.71463 3.90872C6.89612 3.9667 7.06481 4.10472 7.4022 4.38076C8.04061 4.9031 8.35982 5.16427 8.64044 5.20207C8.99661 5.25003 9.35113 5.10319 9.56907 4.81742C9.74077 4.59227 9.78181 4.18195 9.86387 3.36131C9.90722 2.92776 9.9289 2.71098 10.0162 2.5417C10.1271 2.32658 10.3123 2.15898 10.5374 2.07001C10.7145 2 10.9324 2 11.3681 2H12.6318C13.0676 2 13.2855 2 13.4627 2.07005C13.6877 2.15902 13.8728 2.32656 13.9838 2.54161ZM12 16.75C14.6234 16.75 16.75 14.6234 16.75 12C16.75 9.37665 14.6234 7.25 12 7.25C9.37665 7.25 7.25 9.37665 7.25 12C7.25 14.6234 9.37665 16.75 12 16.75Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+
+            
+            <div id="advancedPanel" class="advanced-panel">
+              <div class="advanced-panel-inner">
+                <label class="advanced-item" for="highQualityAnimated">
+                  <span class="advanced-label">High quality animated output</span>
+                  <div class="toggle-switch">
+                    <input id="highQualityAnimated" type="checkbox" checked />
+                    <span class="toggle-slider"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div id="status" class="status-bar" aria-live="polite"></div>
+
+      </section>
+      
+
+
+      
+      
+      
+      <section id="converterPanel" role="tabpanel" aria-label="File Converter" hidden>
+
+        
+        <div class="warn-callout" role="note">
+          <em class="warn-callout-icon">⚠</em>
+          <span>The File Converter works on <strong>static images only</strong> — it does not process animated GIFs frame-by-frame. For animated GIF output, use the <strong>Widget Framer</strong> tab.</span>
+        </div>
+
+        
+        <div style="height:14px"></div>
+        <section id="dropZoneConv" class="preview-wrap" aria-label="Image preview">
+          <div id="previewEmptyConv" class="preview-empty">
+            Drop or paste a file here
+            <span class="preview-empty-sub">Any image your browser can display</span>
+          </div>
+          <div id="previewLoadingConv" class="preview-loading" hidden>
+            <div class="spinner" aria-hidden="true"></div>
+            <span id="previewLoadingTextConv">Loading preview…</span>
+            <div id="progressWrapConv" class="progress-wrap" hidden>
+              <div class="progress-track"><div id="progressBarConv" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div>
+              <span id="progressLabelConv" class="progress-label">0%</span>
+            </div>
+          </div>
+          <img id="previewImageConv" class="preview-image" alt="" hidden />
+          <div id="previewMetaConv" class="preview-meta"></div>
+        </section>
+
+        
+        <div style="height:14px"></div>
+        <div class="section-divider"><span class="section-divider-line"></span><span class="section-divider-label">Source</span><span class="section-divider-line"></span></div>
+        <div class="conv-source">
+          <div class="conv-source-row">
+            <input id="inputPathConv" class="input" type="text" readonly placeholder="Choose any image — PNG, JPG, WEBP, GIF, BMP, ICO, SVG…" />
+            <button id="browseButtonConv" class="btn" type="button">Browse</button>
+          </div>
+          <div class="conv-source-row" style="margin-top:6px">
+            <input id="urlInputConv" class="input" type="text" placeholder="Or paste an image URL…" />
+            <button id="urlImportButtonConv" class="btn" type="button">Import URL</button>
+          </div>
+        </div>
+
+        
+        <div id="gifSourceNoteConv" class="gif-note" style="margin-top:10px" hidden>
+          <span>ℹ</span>
+          <span>GIF source detected. Only the first frame will be used — animated GIF → still image conversion. For animated output, use the Widget Framer tab.</span>
+        </div>
+
+        
+        <div style="height:10px"></div>
+        <div class="section-divider"><span class="section-divider-line"></span><span class="section-divider-label">Output</span><span class="section-divider-line"></span></div>
+        <div class="conv-controls">
+
+          
+          <div class="conv-output-block">
+            <div class="field-label">Filename</div>
+            <div class="conv-output-inner">
+              <input id="outputNameConv" class="input" type="text" placeholder="output.png" />
             </div>
           </div>
 
-          <div id="status" class="status" aria-live="polite"></div>
+          
+          <div class="field">
+            <label class="field-label" for="outputFormatConv">Format</label>
+            <select id="outputFormatConv" class="conv-format-select">
+              <option value="png">PNG</option>
+              <option value="jpg">JPG</option>
+              <option value="webp">WEBP</option>
+              <option value="gif">GIF (static)</option>
+              <option value="avif">AVIF</option>
+              <option value="bmp">BMP</option>
+              <option value="tiff">TIFF</option>
+              <option value="tga">TGA</option>
+              <option value="ppm">PPM</option>
+              <option value="ico">ICO (icon)</option>
+              <option value="cur">CUR (cursor)</option>
+              <option value="svg">SVG (wrapped raster)</option>
+              <option value="pdf">PDF</option>
+            </select>
+          </div>
+
+          
+          <div class="conv-actions">
+            <button id="downloadButtonConv" class="btn" type="button" disabled>Download</button>
+            <button id="convertButtonConv" class="btn btn-primary" type="button">Convert</button>
+          </div>
+
+        </div>
+
+        
+        <div id="qualityRowConv" class="quality-row" hidden>
+          <label for="qualityConv">Quality</label>
+          <input id="qualityConv" class="quality-slider" type="range" min="1" max="100" value="92" style="--pct:91%" />
+          <span id="qualityValueConv" class="quality-val">92</span>
+        </div>
+
+        <div id="statusConv" class="status-bar" aria-live="polite" style="margin-top:8px"></div>
+
+      </section>
+      
+
+      
+      
+      
+      <section id="advancedEditorPanel" role="tabpanel" aria-label="Advanced Editor" hidden>
+<div class="ae-app">
+
+
+      
+      <div class="ae-brand-row">
+        <span class="ae-brand">W.I.S.AE</span>
+        <span class="ae-brand-sub">Advanced Editor — full image adjustments, filters, canvas presets, and Discord file-size budgeting.</span>
+      </div>
+
+      
+      <div class="warn-callout" role="note">
+        <em class="warn-callout-icon">⚠</em>
+        <span>The Advanced Editor works on <strong>static images only</strong> — it does not process animated GIFs frame-by-frame. For animated GIF output, use the <strong>Widget Framer</strong> tab.</span>
+      </div>
+
+      
+      <div class="grid-main">
+
+        
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(88,101,242,0.15));">◉</div>
+            <span class="card-title">Live Canvas</span>
+            <span id="canvasDimLabel" class="card-subtitle">No image</span>
+          </div>
+          <div class="card-body" style="padding:12px;">
+            <div class="canvas-wrap" id="dropZoneAdv">
+              <canvas id="advCanvas" style="display:none;"></canvas>
+              <div class="canvas-overlay-empty" id="canvasEmpty">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+                  <path d="M3 15l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>Drop or click to load an image</span>
+              </div>
+            </div>
+            <div class="status-bar" id="statusBar" data-tone="neutral" style="margin-top:8px;" aria-live="polite"></div>
+          </div>
+        </div>
+
+        
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.12));">⬍</div>
+            <span class="card-title">Import &amp; Export</span>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
+
+            <div>
+              <label class="field-label">Load image</label>
+              <div class="row">
+                <button id="advBrowseBtn" style="flex:1;">Browse</button>
+                <button id="advPasteUrlBtn" style="flex:1;">From URL</button>
+              </div>
+              <div id="urlRow" class="row" style="margin-top:6px;display:none;">
+                <input type="text" id="advUrlInput" placeholder="https://…" />
+                <button id="advFetchBtn">Fetch</button>
+              </div>
+            </div>
+
+            <div class="section-sep"></div>
+
+            <div>
+              <label class="field-label">Output format</label>
+              <div class="format-grid" id="formatChipsAE">
+                <span class="format-chip selected" data-fmt="png">PNG</span>
+                <span class="format-chip" data-fmt="jpg">JPG</span>
+                <span class="format-chip" data-fmt="webp">WEBP</span>
+                <span class="format-chip" data-fmt="bmp">BMP</span>
+                <span class="format-chip" data-fmt="gif">GIF</span>
+                <span class="format-chip" data-fmt="tiff">TIFF</span>
+                <span class="format-chip" data-fmt="ico">ICO</span>
+                <span class="format-chip" data-fmt="avif">AVIF</span>
+              </div>
+            </div>
+
+            <div id="qualityWrap">
+              <label class="field-label">Quality (JPG / WEBP / AVIF) — <span id="qualityVal">92</span>%</label>
+              <input type="range" id="qualitySlider" min="10" max="100" value="92" style="--pct:91%" />
+            </div>
+
+            <div>
+              <label class="field-label">Output filename</label>
+              <input type="text" id="advOutputName" placeholder="output.png" />
+            </div>
+
+            <div class="row" style="margin-top:4px;">
+              <button id="advApplyBtn" class="primary" style="flex:1;" disabled>Apply &amp; Preview</button>
+              <button id="advDownloadBtn" class="success" style="flex:1;" disabled>Download</button>
+            </div>
+
+          </div>
         </div>
       </div>
-    </main>
 
-    <input id="localFileInput" type="file" accept=".png,.jpg,.jpeg,.webp,.gif" hidden />
-    <script type="module" src="./app.js"></script>
+
+      
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(251,191,36,0.12));">⊞</div>
+          <span class="card-title">Canvas Presets</span>
+          <span class="badge badge-yellow" style="margin-left:8px;">SEPARATE CONFIG</span>
+          <span class="card-subtitle">Click a preset to resize canvas</span>
+        </div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="tabs" id="presetTabs">
+            <button class="tab-btn active" data-tab="discord">Discord</button>
+            <button class="tab-btn" data-tab="social">Social</button>
+            <button class="tab-btn" data-tab="print">Print</button>
+            <button class="tab-btn" data-tab="game">Game / UI</button>
+            <button class="tab-btn" data-tab="custom">Custom</button>
+          </div>
+
+          <div id="presetPanelDiscord" class="tab-panel active">
+            <div class="preset-grid" id="presetGridDiscord"></div>
+          </div>
+          <div id="presetPanelSocial" class="tab-panel">
+            <div class="preset-grid" id="presetGridSocial"></div>
+          </div>
+          <div id="presetPanelPrint" class="tab-panel">
+            <div class="preset-grid" id="presetGridPrint"></div>
+          </div>
+          <div id="presetPanelGame" class="tab-panel">
+            <div class="preset-grid" id="presetGridGame"></div>
+          </div>
+          <div id="presetPanelCustom" class="tab-panel">
+            <p style="font-size:12px;color:#71717a;margin-bottom:10px;">Add your own custom aspect ratio preset.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+              <div style="flex:1;min-width:120px;">
+                <label class="field-label">Preset name</label>
+                <input type="text" id="customPresetName" placeholder="My Preset" />
+              </div>
+              <div>
+                <label class="field-label">Width (px)</label>
+                <input type="number" id="customPresetW" style="width:90px;" placeholder="1920" />
+              </div>
+              <div>
+                <label class="field-label">Height (px)</label>
+                <input type="number" id="customPresetH" style="width:90px;" placeholder="1080" />
+              </div>
+              <button id="addCustomPresetBtn">+ Add Preset</button>
+            </div>
+            <div class="preset-grid" id="presetGridCustom" style="margin-top:12px;"></div>
+          </div>
+
+          
+          <div class="row-center" style="flex-wrap:wrap;gap:12px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.05);">
+            <div class="row-center" style="gap:8px;">
+              <span style="font-size:11px;color:#71717a;">Canvas background</span>
+              <input type="color" id="canvasBgColor" value="#000000" title="Canvas fill color" />
+              <span style="font-size:11px;color:#71717a;margin-left:4px;">Transparent</span>
+              <label class="toggle">
+                <input type="checkbox" id="canvasBgTransparent" />
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+            <div class="row-center" style="gap:8px;margin-left:auto;">
+              <span style="font-size:11px;color:#71717a;">Lock aspect ratio</span>
+              <label class="toggle">
+                <input type="checkbox" id="lockAspect" checked />
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+            <div style="display:flex;gap:6px;align-items:flex-end;">
+              <div>
+                <label class="field-label">W</label>
+                <input type="number" id="canvasW" style="width:78px;" placeholder="Width" />
+              </div>
+              <div style="padding-bottom:8px;color:#52525b;">×</div>
+              <div>
+                <label class="field-label">H</label>
+                <input type="number" id="canvasH" style="width:78px;" placeholder="Height" />
+              </div>
+              <button id="applyCanvasSizeBtn">Resize</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      
+      <div class="grid-2" style="gap:16px;">
+
+        
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(59,130,246,0.12));">⫸</div>
+            <span class="card-title">Adjustments</span>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:2px;">
+            <div class="adj-row">
+              <span class="adj-label">Brightness</span>
+              <input type="range" id="adjBrightness" min="-100" max="100" value="0" style="--pct:50%" />
+              <span class="adj-val" id="vBrightness">0</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Contrast</span>
+              <input type="range" id="adjContrast" min="-100" max="100" value="0" style="--pct:50%" />
+              <span class="adj-val" id="vContrast">0</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Saturation</span>
+              <input type="range" id="adjSaturation" min="-100" max="100" value="0" style="--pct:50%" />
+              <span class="adj-val" id="vSaturation">0</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Hue shift</span>
+              <input type="range" id="adjHue" min="0" max="360" value="0" style="--pct:0%" />
+              <span class="adj-val" id="vHue">0°</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Blur</span>
+              <input type="range" id="adjBlur" min="0" max="20" value="0" style="--pct:0%" />
+              <span class="adj-val" id="vBlur">0px</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Sharpen</span>
+              <input type="range" id="adjSharpen" min="0" max="10" value="0" step="0.5" style="--pct:0%" />
+              <span class="adj-val" id="vSharpen">0</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Opacity</span>
+              <input type="range" id="adjOpacity" min="0" max="100" value="100" style="--pct:100%" />
+              <span class="adj-val" id="vOpacity">100%</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Exposure</span>
+              <input type="range" id="adjExposure" min="-100" max="100" value="0" style="--pct:50%" />
+              <span class="adj-val" id="vExposure">0</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Noise</span>
+              <input type="range" id="adjNoise" min="0" max="60" value="0" style="--pct:0%" />
+              <span class="adj-val" id="vNoise">0</span>
+            </div>
+            <div class="adj-row">
+              <span class="adj-label">Vignette</span>
+              <input type="range" id="adjVignette" min="0" max="100" value="0" style="--pct:0%" />
+              <span class="adj-val" id="vVignette">0</span>
+            </div>
+            <button id="resetAdjBtn" class="danger" style="margin-top:8px;width:100%;">Reset All</button>
+          </div>
+        </div>
+
+        
+        <div style="display:flex;flex-direction:column;gap:16px;">
+
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background:rgba(16,185,129,0.12);">↻</div>
+              <span class="card-title">Transform</span>
+            </div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
+              <div class="row-center" style="gap:16px;">
+                <div>
+                  <label class="field-label" style="text-align:center;display:block;">Rotation</label>
+                  <div class="row-center" style="gap:10px;">
+                    <div class="rotation-ring" id="rotationRing">
+                      <span class="rotation-val" id="rotationDisplay">0°</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                      <button onclick="setRotation(0)">0°</button>
+                      <button onclick="setRotation(90)">90°</button>
+                      <button onclick="setRotation(180)">180°</button>
+                      <button onclick="setRotation(270)">270°</button>
+                    </div>
+                  </div>
+                </div>
+                <div style="flex:1;">
+                  <label class="field-label">Custom angle</label>
+                  <input type="number" id="customRotation" min="0" max="359" placeholder="45" />
+                  <div class="adj-row" style="margin-top:8px;">
+                    <span class="adj-label">Angle</span>
+                    <input type="range" id="rotationSlider" min="0" max="359" value="0" style="--pct:0%" />
+                    <span class="adj-val" id="vRotation">0°</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="field-label">Flip</label>
+                <div class="flip-row">
+                  <button class="flip-btn" id="flipHBtn" title="Flip Horizontal">
+                    <span class="flip-icon">↔</span> Flip H
+                  </button>
+                  <button class="flip-btn" id="flipVBtn" title="Flip Vertical">
+                    <span class="flip-icon">↕</span> Flip V
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background:rgba(244,114,182,0.12);">◐</div>
+              <span class="card-title">Color &amp; Tint</span>
+            </div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+              <div>
+                <label class="field-label">Quick tint presets</label>
+                <div class="swatch-row" id="tintSwatches">
+                  <div class="swatch" style="background:#ffffff;" data-tint="none"    title="None"></div>
+                  <div class="swatch" style="background:#ef4444;" data-tint="#ef4444" title="Red"></div>
+                  <div class="swatch" style="background:#f97316;" data-tint="#f97316" title="Orange"></div>
+                  <div class="swatch" style="background:#eab308;" data-tint="#eab308" title="Yellow"></div>
+                  <div class="swatch" style="background:#22c55e;" data-tint="#22c55e" title="Green"></div>
+                  <div class="swatch" style="background:#3b82f6;" data-tint="#3b82f6" title="Blue"></div>
+                  <div class="swatch" style="background:#8b5cf6;" data-tint="#8b5cf6" title="Purple"></div>
+                  <div class="swatch" style="background:#ec4899;" data-tint="#ec4899" title="Pink"></div>
+                  <div class="swatch" style="background:#14b8a6;" data-tint="#14b8a6" title="Teal"></div>
+                  <div class="swatch" style="background:#5865f2;" data-tint="#5865f2" title="Discord"></div>
+                </div>
+              </div>
+              <div class="grid-2">
+                <div>
+                  <label class="field-label">Custom tint color</label>
+                  <input type="color" id="customTintColor" value="#8b5cf6" style="width:100%;height:36px;" />
+                </div>
+                <div>
+                  <label class="field-label">Tint intensity</label>
+                  <input type="range" id="tintIntensity" min="0" max="100" value="0" style="--pct:0%" />
+                </div>
+              </div>
+              <div>
+                <label class="field-label">Color mode</label>
+                <div class="format-grid" id="colorModeChips">
+                  <span class="format-chip selected" data-mode="normal">Normal</span>
+                  <span class="format-chip" data-mode="grayscale">Grayscale</span>
+                  <span class="format-chip" data-mode="sepia">Sepia</span>
+                  <span class="format-chip" data-mode="invert">Invert</span>
+                  <span class="format-chip" data-mode="duotone">Duotone</span>
+                  <span class="format-chip" data-mode="posterize">Posterize</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(239,68,68,0.12));">⌘</div>
+          <span class="card-title">Filters</span>
+          <span class="card-subtitle" id="activeFilterLabel">None applied</span>
+        </div>
+        <div class="card-body">
+          <div class="filter-strip" id="filterStrip"></div>
+        </div>
+      </div>
+
+
+      
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:rgba(88,101,242,0.18);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.033.055a19.91 19.91 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z" fill="#5865f2"/>
+            </svg>
+          </div>
+          <span class="card-title">Discord File Size Budgeting</span>
+          <span class="badge badge-purple" style="margin-left:8px;">BUDGET TOOL</span>
+        </div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="grid-2">
+            <div>
+              <label class="field-label">Current file size</label>
+              <div style="font-size:22px;font-weight:700;color:#e4e4e7;letter-spacing:-0.03em;" id="budgetCurrentSize">—</div>
+              <div style="font-size:11px;color:#52525b;margin-top:2px;" id="budgetDimensions">No image loaded</div>
+            </div>
+            <div>
+              <label class="field-label">Estimated output size</label>
+              <div style="font-size:22px;font-weight:700;color:#c4b5fd;letter-spacing:-0.03em;" id="budgetEstSize">—</div>
+              <div style="font-size:11px;color:#52525b;margin-top:2px;" id="budgetSavings">—</div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+              <span style="font-size:11px;color:#71717a;">Budget usage</span>
+              <span style="font-size:11px;color:#a1a1aa;" id="budgetPct">—</span>
+            </div>
+            <div class="budget-bar-wrap">
+              <div class="budget-bar" id="budgetBarEl" style="width:0%;background:#22c55e;"></div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px;" id="tierList">
+            <div class="budget-tier" id="tier-free">
+              <span class="budget-tier-icon">○</span>
+              <div>
+                <div class="budget-tier-name">Free / DM</div>
+                <div class="budget-tier-limit">Max 25 MB per file</div>
+              </div>
+              <span class="budget-tier-size" id="tierSize-free">—</span>
+            </div>
+            <div class="budget-tier" id="tier-nitrobasic">
+              <span class="budget-tier-icon">◇</span>
+              <div>
+                <div class="budget-tier-name">Nitro Basic</div>
+                <div class="budget-tier-limit">Max 50 MB per file</div>
+              </div>
+              <span class="budget-tier-size" id="tierSize-nitrobasic">—</span>
+            </div>
+            <div class="budget-tier" id="tier-nitro">
+              <span class="budget-tier-icon">▲</span>
+              <div>
+                <div class="budget-tier-name">Nitro</div>
+                <div class="budget-tier-limit">Max 500 MB per file</div>
+              </div>
+              <span class="budget-tier-size" id="tierSize-nitro">—</span>
+            </div>
+            <div class="budget-tier" id="tier-boostlvl2">
+              <span class="budget-tier-icon">★</span>
+              <div>
+                <div class="budget-tier-name">Server Boost Lv. 2</div>
+                <div class="budget-tier-limit">Max 50 MB for all members</div>
+              </div>
+              <span class="budget-tier-size" id="tierSize-boostlvl2">—</span>
+            </div>
+            <div class="budget-tier" id="tier-boostlvl3">
+              <span class="budget-tier-icon">✦</span>
+              <div>
+                <div class="budget-tier-name">Server Boost Lv. 3</div>
+                <div class="budget-tier-limit">Max 100 MB for all members</div>
+              </div>
+              <span class="budget-tier-size" id="tierSize-boostlvl3">—</span>
+            </div>
+          </div>
+
+          <div style="background:rgba(88,101,242,0.06);border:1px solid rgba(88,101,242,0.15);border-radius:10px;padding:12px 14px;">
+            <div style="font-size:11px;font-weight:600;color:#a5b4fc;margin-bottom:8px;">◆ Optimization Tips</div>
+            <div id="budgetTips" style="font-size:11px;color:#71717a;line-height:1.6;">
+              Load an image to see optimization recommendations.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    
+    </div>
+      </section>
+      
+
+    </div>
+
+    
+    <input id="localFileInput"     type="file" accept=".png,.jpg,.jpeg,.webp,.gif" hidden />
+    <input id="localFileInputConv" type="file" accept="image/*" hidden />
+    <input id="advFileInput" type="file" accept=".png,.jpg,.jpeg,.webp,.gif,.bmp,.tiff,.tif,.ico,.avif,.svg" hidden />
+
+    
     <script>
       (function () {
         var gearBtn = document.getElementById('advancedToggleBtn');
         if (!gearBtn) return;
         var gearSvg = gearBtn.querySelector('svg');
-
         function spinOnce() {
           gearSvg.classList.remove('spin-once');
-
           void gearSvg.offsetWidth;
           gearSvg.classList.add('spin-once');
         }
-
         gearBtn.addEventListener('mouseenter', spinOnce);
         gearBtn.addEventListener('click', spinOnce);
         gearSvg.addEventListener('animationend', function () {
@@ -119,5 +736,39 @@
         });
       })();
     </script>
+
+    
+    <script>
+      (function () {
+        var chips = document.querySelectorAll('#formatChips .format-chip');
+        var select = document.getElementById('outputFormat');
+        chips.forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            chips.forEach(function (c) {
+              c.classList.remove('active');
+              c.setAttribute('aria-pressed', 'false');
+            });
+            chip.classList.add('active');
+            chip.setAttribute('aria-pressed', 'true');
+            select.value = chip.dataset.format;
+            
+            select.dispatchEvent(new Event('change'));
+          });
+          chip.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chip.click(); }
+          });
+        });
+        
+        select.addEventListener('change', function () {
+          chips.forEach(function (c) {
+            var match = c.dataset.format === select.value;
+            c.classList.toggle('active', match);
+            c.setAttribute('aria-pressed', String(match));
+          });
+        });
+      })();
+    </script>
+
+    <script type="module" src="./app.js"></script>
   </body>
 </html>
