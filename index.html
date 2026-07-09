@@ -157,10 +157,9 @@
       <section id="converterPanel" role="tabpanel" aria-label="File Converter" hidden>
 
         
-        <div class="warn-callout" id="warnCalloutConverter" role="note">
+        <div class="warn-callout" role="note">
           <em class="warn-callout-icon">⚠</em>
           <span>The File Converter works on <strong>static images only</strong> — it does not process animated GIFs frame-by-frame. For animated GIF output, use the <strong>Widget Framer</strong> tab.</span>
-          <button class="warn-callout-close" aria-label="Dismiss notice" onclick="dismissWarnCallout('warnCalloutConverter')">−</button>
         </div>
 
         
@@ -269,10 +268,9 @@
       </div>
 
       
-      <div class="warn-callout" id="warnCalloutAdvanced" role="note">
+      <div class="warn-callout" role="note">
         <em class="warn-callout-icon">⚠</em>
         <span>The Advanced Editor works on <strong>static images only</strong> — it does not process animated GIFs frame-by-frame. For animated GIF output, use the <strong>Widget Framer</strong> tab.</span>
-        <button class="warn-callout-close" aria-label="Dismiss notice" onclick="dismissWarnCallout('warnCalloutAdvanced')">−</button>
       </div>
 
       
@@ -411,7 +409,63 @@
           <div class="row-center" style="flex-wrap:wrap;gap:12px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.05);">
             <div class="row-center" style="gap:8px;">
               <span style="font-size:11px;color:#71717a;">Canvas background</span>
-              <input type="color" id="canvasBgColor" value="#000000" title="Canvas fill color" />
+
+              <input type="color" id="canvasBgColor" value="#000000" style="display:none" aria-hidden="true" />
+
+              <div class="wcp-trigger" id="wcpTrigger" title="Canvas fill color" tabindex="0" role="button" aria-label="Pick canvas background colour">
+                <span class="wcp-swatch" id="wcpSwatch"></span>
+                <span class="wcp-hex" id="wcpHexLabel">#000000</span>
+                <svg class="wcp-caret" width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 2.5L4 5.5L7 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+
+              <div class="wcp-popover" id="wcpPopover" hidden>
+                <div class="wcp-gradient" id="wcpGradient">
+                  <canvas id="wcpSVCanvas" width="220" height="160"></canvas>
+                  <div class="wcp-cursor" id="wcpCursor"></div>
+                </div>
+                <div class="wcp-hue-row">
+                  <canvas id="wcpHueCanvas" width="188" height="12"></canvas>
+                  <div class="wcp-hue-thumb" id="wcpHueThumb"></div>
+                </div>
+                <div class="wcp-alpha-row">
+                  <canvas id="wcpAlphaCanvas" width="188" height="12"></canvas>
+                  <div class="wcp-alpha-thumb" id="wcpAlphaThumb"></div>
+                </div>
+                <div class="wcp-inputs">
+                  <div class="wcp-input-group">
+                    <input class="wcp-input" id="wcpHexInput" type="text" maxlength="7" spellcheck="false" />
+                    <label class="wcp-input-label">HEX</label>
+                  </div>
+                  <div class="wcp-input-group">
+                    <input class="wcp-input wcp-input-sm" id="wcpRInput" type="number" min="0" max="255" />
+                    <label class="wcp-input-label">R</label>
+                  </div>
+                  <div class="wcp-input-group">
+                    <input class="wcp-input wcp-input-sm" id="wcpGInput" type="number" min="0" max="255" />
+                    <label class="wcp-input-label">G</label>
+                  </div>
+                  <div class="wcp-input-group">
+                    <input class="wcp-input wcp-input-sm" id="wcpBInput" type="number" min="0" max="255" />
+                    <label class="wcp-input-label">B</label>
+                  </div>
+                  <div class="wcp-input-group">
+                    <input class="wcp-input wcp-input-sm" id="wcpAInput" type="number" min="0" max="100" />
+                    <label class="wcp-input-label">A%</label>
+                  </div>
+                </div>
+                <div class="wcp-swatches">
+                  <div class="wcp-preset" data-color="#000000"></div>
+                  <div class="wcp-preset" data-color="#ffffff"></div>
+                  <div class="wcp-preset" data-color="#1e1e24"></div>
+                  <div class="wcp-preset" data-color="#5865f2"></div>
+                  <div class="wcp-preset" data-color="#8b5cf6"></div>
+                  <div class="wcp-preset" data-color="#22c55e"></div>
+                  <div class="wcp-preset" data-color="#ef4444"></div>
+                  <div class="wcp-preset" data-color="#f59e0b"></div>
+                  <div class="wcp-preset" data-color="#06b6d4"></div>
+                  <div class="wcp-preset" data-color="#ec4899"></div>
+                </div>
+              </div>
               <span style="font-size:11px;color:#71717a;margin-left:4px;">Transparent</span>
               <label class="toggle">
                 <input type="checkbox" id="canvasBgTransparent" />
@@ -778,19 +832,152 @@
 
     <script type="module" src="./app.js"></script>
 
+
+    <script>
+    (function () {
+
+      let h = 0, s = 0, v = 0, a = 1;
+      let open = false;
+
+
+      const trigger     = document.getElementById('wcpTrigger');
+      const popover     = document.getElementById('wcpPopover');
+      const swatch      = document.getElementById('wcpSwatch');
+      const hexLabel    = document.getElementById('wcpHexLabel');
+      const svCanvas    = document.getElementById('wcpSVCanvas');
+      const hueCanvas   = document.getElementById('wcpHueCanvas');
+      const alphaCanvas = document.getElementById('wcpAlphaCanvas');
+      const cursor      = document.getElementById('wcpCursor');
+      const hueThumb    = document.getElementById('wcpHueThumb');
+      const alphaThumb  = document.getElementById('wcpAlphaThumb');
+      const hexInput    = document.getElementById('wcpHexInput');
+      const rIn         = document.getElementById('wcpRInput');
+      const gIn         = document.getElementById('wcpGInput');
+      const bIn         = document.getElementById('wcpBInput');
+      const aIn         = document.getElementById('wcpAInput');
+      const realInput   = document.getElementById('canvasBgColor');
+      const presets     = document.querySelectorAll('.wcp-preset');
+      if (!trigger) return;
+
+      function hsvToRgb(H,S,V){const f=n=>{const k=(n+H*6)%6;return V-V*S*Math.max(0,Math.min(k,4-k,1));};return[Math.round(f(5)*255),Math.round(f(3)*255),Math.round(f(1)*255)];}
+      function rgbToHsv(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let H=0;if(d){if(mx===r)H=((g-b)/d)%6;else if(mx===g)H=(b-r)/d+2;else H=(r-g)/d+4;H/=6;if(H<0)H+=1;}return[H,mx?d/mx:0,mx];}
+      function toHex(r,g,b){return'#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');}
+      function hexToRgb(hex){const m=hex.replace('#','').match(/../g);return m&&m.length===3?m.map(x=>parseInt(x,16)):null;}
+      function clamp(x,lo,hi){return Math.max(lo,Math.min(hi,x));}
+
+      function drawSV(){
+        const ctx=svCanvas.getContext('2d'),W=svCanvas.width,H=svCanvas.height;
+        const[r,g,b]=hsvToRgb(h,1,1);
+        const gr=ctx.createLinearGradient(0,0,W,0);
+        gr.addColorStop(0,'#fff');gr.addColorStop(1,`rgb(${r},${g},${b})`);
+        ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);
+        const vg=ctx.createLinearGradient(0,0,0,H);
+        vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'#000');
+        ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+        cursor.style.left=(s*W-7)+'px';cursor.style.top=((1-v)*H-7)+'px';
+      }
+      function drawHue(){
+        const ctx=hueCanvas.getContext('2d'),W=hueCanvas.width,H=hueCanvas.height;
+        const g=ctx.createLinearGradient(0,0,W,0);
+        for(let i=0;i<=6;i++)g.addColorStop(i/6,`hsl(${i*60},100%,50%)`);
+        ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+        hueThumb.style.left=(h*W-6)+'px';
+      }
+      function drawAlpha(){
+        const ctx=alphaCanvas.getContext('2d'),W=alphaCanvas.width,H=alphaCanvas.height;
+        for(let x=0;x<W;x+=8)for(let y=0;y<H;y+=8){ctx.fillStyle=((x/8+y/8)%2===0)?'#555':'#333';ctx.fillRect(x,y,8,8);}
+        const[r,g,b]=hsvToRgb(h,s,v);
+        const g2=ctx.createLinearGradient(0,0,W,0);
+        g2.addColorStop(0,`rgba(${r},${g},${b},0)`);g2.addColorStop(1,`rgba(${r},${g},${b},1)`);
+        ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+        alphaThumb.style.left=(a*W-6)+'px';
+      }
+      function drawAll(){drawSV();drawHue();drawAlpha();}
+
+      function syncUI(){
+        const[r,g,b]=hsvToRgb(h,s,v);
+        const hex=toHex(r,g,b);
+        swatch.style.background=`rgba(${r},${g},${b},${a})`;
+        hexLabel.textContent=hex;
+        hexInput.value=hex;
+        rIn.value=r;gIn.value=g;bIn.value=b;
+        aIn.value=Math.round(a*100);
+        realInput.value=hex;
+        realInput.dispatchEvent(new Event('input',{bubbles:true}));
+        drawAll();
+      }
+
+      function openPicker(){
+        open=true;popover.hidden=false;
+        trigger.classList.add('wcp-trigger--open');
+        requestAnimationFrame(()=>{drawAll();positionPopover();});
+      }
+      function closePicker(){open=false;popover.hidden=true;trigger.classList.remove('wcp-trigger--open');}
+      function positionPopover(){
+        const tr=trigger.getBoundingClientRect();
+        const ph=popover.offsetHeight||310;
+        const below=tr.bottom+8+ph<window.innerHeight;
+        popover.style.top=(below?(tr.bottom+8+window.scrollY):(tr.top-8-ph+window.scrollY))+'px';
+        popover.style.left=Math.max(8,Math.min(tr.left,window.innerWidth-250))+'px';
+      }
+
+      trigger.addEventListener('click',()=>open?closePicker():openPicker());
+      trigger.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open?closePicker():openPicker();}});
+      document.addEventListener('mousedown',e=>{if(open&&!popover.contains(e.target)&&!trigger.contains(e.target))closePicker();});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape'&&open)closePicker();});
+
+      function svFrom(e){const r=svCanvas.getBoundingClientRect();s=clamp((e.clientX-r.left)/r.width,0,1);v=clamp(1-(e.clientY-r.top)/r.height,0,1);syncUI();}
+      let svDrag=false;
+      svCanvas.addEventListener('mousedown',e=>{svDrag=true;svFrom(e);});
+      document.addEventListener('mousemove',e=>{if(svDrag)svFrom(e);});
+      document.addEventListener('mouseup',()=>svDrag=false);
+      svCanvas.addEventListener('touchstart',e=>{svDrag=true;svFrom(e.touches[0]);},{passive:true});
+      document.addEventListener('touchmove',e=>{if(svDrag)svFrom(e.touches[0]);},{passive:true});
+      document.addEventListener('touchend',()=>svDrag=false);
+
+      function hueFrom(e){const r=hueCanvas.getBoundingClientRect();h=clamp((e.clientX-r.left)/r.width,0,1);syncUI();}
+      let hueDrag=false;
+      hueCanvas.addEventListener('mousedown',e=>{hueDrag=true;hueFrom(e);});
+      document.addEventListener('mousemove',e=>{if(hueDrag)hueFrom(e);});
+      document.addEventListener('mouseup',()=>hueDrag=false);
+      hueCanvas.addEventListener('touchstart',e=>{hueDrag=true;hueFrom(e.touches[0]);},{passive:true});
+      document.addEventListener('touchmove',e=>{if(hueDrag)hueFrom(e.touches[0]);},{passive:true});
+      document.addEventListener('touchend',()=>hueDrag=false);
+
+      function alphaFrom(e){const r=alphaCanvas.getBoundingClientRect();a=clamp((e.clientX-r.left)/r.width,0,1);syncUI();}
+      let alphaDrag=false;
+      alphaCanvas.addEventListener('mousedown',e=>{alphaDrag=true;alphaFrom(e);});
+      document.addEventListener('mousemove',e=>{if(alphaDrag)alphaFrom(e);});
+      document.addEventListener('mouseup',()=>alphaDrag=false);
+      alphaCanvas.addEventListener('touchstart',e=>{alphaDrag=true;alphaFrom(e.touches[0]);},{passive:true});
+      document.addEventListener('touchmove',e=>{if(alphaDrag)alphaFrom(e.touches[0]);},{passive:true});
+      document.addEventListener('touchend',()=>alphaDrag=false);
+
+      hexInput.addEventListener('input',()=>{const rgb=hexToRgb(hexInput.value.trim());if(rgb){[h,s,v]=rgbToHsv(...rgb);syncUI();}});
+      [rIn,gIn,bIn].forEach(inp=>inp.addEventListener('input',()=>{const r=clamp(+rIn.value||0,0,255),g=clamp(+gIn.value||0,0,255),b=clamp(+bIn.value||0,0,255);[h,s,v]=rgbToHsv(r,g,b);syncUI();}));
+      aIn.addEventListener('input',()=>{a=clamp((+aIn.value||0)/100,0,1);syncUI();});
+
+      presets.forEach(p=>{
+        p.style.background=p.dataset.color;
+        p.addEventListener('click',()=>{const rgb=hexToRgb(p.dataset.color);if(rgb){[h,s,v]=rgbToHsv(...rgb);a=1;syncUI();}});
+      });
+
+      function initFromHex(hex){const rgb=hexToRgb(hex);if(rgb){[h,s,v]=rgbToHsv(...rgb);a=1;syncUI();}}
+      initFromHex(realInput.value||'#000000');
+      window.__wcpSetColor=initFromHex;
+    })();
+    </script>
+
     <script>
       function dismissWarnCallout(id) {
         var el = document.getElementById(id);
         if (!el || el.classList.contains('warn-callout--dismissing')) return;
         el.classList.add('warn-callout--dismissing');
-
         el.addEventListener('animationend', function onEnd(e) {
           if (e.animationName !== 'warnDisintegrate') return;
           el.removeEventListener('animationend', onEnd);
-
           el.style.height = el.offsetHeight + 'px';
           el.style.marginBottom = getComputedStyle(el).marginBottom;
-
           void el.offsetHeight;
           el.classList.add('warn-callout--collapsing');
           el.addEventListener('transitionend', function onCollapse() {
