@@ -133,6 +133,18 @@
       .tab-button[aria-selected="true"]::after { opacity: 1; }
 
       
+      @keyframes wis-tab-flow {
+        0%, 100% { background-position: 0% 50%; }
+        50%      { background-position: 100% 50%; }
+      }
+      .tab-button[data-tab="advanced"]::after {
+        background: linear-gradient(90deg,
+          var(--accent) 0%, var(--violet) 30%, #c4b5fd 50%, var(--violet) 70%, var(--accent) 100%);
+        background-size: 250% 100%;
+        animation: wis-tab-flow 3s ease-in-out infinite;
+      }
+
+      
       .preview-wrap {
         flex: 1 1 auto;
         min-height: 260px;
