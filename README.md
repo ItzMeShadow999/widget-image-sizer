@@ -85,6 +85,23 @@ Because it implements universal web standards and low-level canvas stream render
 * **Warning Dialogs:** Integrated a dedicated close button for dismissing warning popups
 * **Dynamic Background Picker:** Implemented a real-time background color picker equipped with a live preview window
 </details>
+<details>
+  <summary>Coming Soon!</summary>
+  
+  # COMING SOON
+
+## [THEMES]
+* **Theme Switcher:** Pick your look Original, White Mode, Kawaii, Discord, or Gothic. From a new titlebar switcher, fully re-skinned across the whole app including the Advanced Editor
+* **White Mode:** ...enter at your own risk. You'll be asked to agree to a few terms first.
+
+## [TOOLS]
+* **Direct Media Downloader:** Drop in an `.mp4` or `.gif` URL and grab the file straight to disk, no extra steps
+* **Frame-by-Frame Export:** Convert a GIF or video into a `.zip` of every individual frame, not just the first!
+
+## [FIXES]
+* Smoother popovers, tighter theme consistency across chips, sliders, and the rotation ring
+</details>
+
 
 ---
 
