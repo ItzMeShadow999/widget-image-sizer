@@ -3,8 +3,13 @@
 A lightweight, blazing-fast browser utility designed to format, convert, and optimize assets for Discord and social platforms.
 
 ![System Tutorial](https://github.com/ItzMeShadow999/Widget-Image-Studio/blob/main/W.I.S.gif?raw=true)
-
 ---
+![Website](https://img.shields.io/badge/Website-Live-000000?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OSAyIDIgNi40OSAyIDEyczQuNDkgMTAgMTAgMTAgMTAtNC40OSAxMC0xMFMxNy41MSAyIDEyIDJNNCAxMmMwLS45LjE2LTEuNzYuNDMtMi41N0w2IDExbDIgMnYybDIgMiAxIDF2MS45M2MtMy45NC0uNDktNy0zLjg2LTctNy45M20xNC4zMyA0Ljg3Yy0uNjUtLjUzLTEuNjQtLjg3LTIuMzMtLjg3di0xYzAtMS4xLS45LTItMi0yaC00di0zYzEuMSAwIDItLjkgMi0yVjdoMWMxLjEgMCAyLS45IDItMnYtLjQxYzIuOTMgMS4xOSA1IDQuMDYgNSA3LjQxIDAgMS44My0uNjMgMy41Mi0xLjY3IDQuODciLz48L3N2Zz4K&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Online-brightgreen)
+![Widget Framer](https://img.shields.io/badge/Widget%20Framer-PNG%20%7C%20JPG%20%7C%20WEBP%20%7C%20GIF-5865f2?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0xIDRoMy4ybDIuMyAxMi4yTDkuMyA0aDMuNGwyLjggMTIuMkwxOCA0aDNsLTQgMTZoLTMuNmwtMi42LTExLjVMOC4yIDIwSDQuNkwxIDR6Ii8+PC9zdmc+&logoColor=white)
+![File Converter](https://img.shields.io/badge/File%20Converter-any%20%E2%87%84%20any-5865f2?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik03IDdoMTFsLTMtM00xNyAxN0g2bDMgMyIvPjwvc3ZnPg==&logoColor=white) ![Converter Formats](https://img.shields.io/badge/formats-PNG%20%7C%20JPG%20%7C%20WEBP%20%7C%20GIF%20%7C%20AVIF%20%7C%20BMP%20%7C%20TIFF%20%7C%20TGA%20%7C%20PPM%20%7C%20ICO%20%7C%20CUR%20%7C%20SVG%20%7C%20PDF%20%7C%20MP4%20%7C%20WEBM-5865f2?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik05IDVoN2w0IDR2MTFIOXoiIGZpbGw9IiM1ODY1ZjIiLz48cGF0aCBkPSJNNSA5aDdsNCA0djExSDV6IiBmaWxsPSIjNDc1MmM0Ii8+PC9zdmc+Cg==&logoColor=white)
+
+
 
 ##    How to Use
 
