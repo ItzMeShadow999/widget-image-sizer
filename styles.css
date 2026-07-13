@@ -2843,8 +2843,6 @@
 :root[data-theme="kawaii"] .theme-option-swatch { border-color: rgba(255,150,190,0.35); }
 :root[data-theme="kawaii"] .theme-option-name { color: #7a3358; }
 :root[data-theme="kawaii"] .theme-option-blurb { color: #c07ab8; }
-
-/* Modal */
 :root[data-theme="kawaii"] .theme-modal {
   background: linear-gradient(135deg, #fff0f5 0%, #ffe3ef 100%);
   border-color: rgba(255,150,190,0.5);
@@ -2867,8 +2865,6 @@
 }
 :root[data-theme="kawaii"] .theme-modal-btn--confirm:hover { filter: brightness(1.1); }
 :root[data-theme="kawaii"] .theme-modal-btn--confirm:focus-visible { box-shadow: 0 0 0 2px rgba(255,100,160,0.5); }
-
-/* ── Coverage completion: elements the full retheme above missed ── */
 :root[data-theme="kawaii"] .gear-btn { color: #c07ab8; background: rgba(255,150,190,0.08); }
 :root[data-theme="kawaii"] .gear-btn:hover { color: #8a3a6e; background: rgba(255,150,190,0.16); border-color: rgba(255,150,190,0.4); }
 :root[data-theme="kawaii"] .gear-btn[aria-pressed="true"] { background: rgba(255,128,176,0.22); border-color: rgba(255,128,176,0.4); }
