@@ -17,7 +17,10 @@
     <link rel="stylesheet" href="/styles.css" />
 
     <script>
-      
+      /* Apply the saved theme before first paint so there's no flash of
+         the wrong theme on load. Deliberately tiny and defensive — this
+         has to run before anything else touches the page. Full switcher
+         logic lives in app.js (merged in below the main app code). */
       (function () {
         var VALID = ["original", "white", "kawaii", "discord", "gothic"];
         try {
@@ -472,10 +475,11 @@
           hidden
         >
           <span>ℹ</span>
-          <span class="loading-text"
-            >Loading<span class="loading-dots" aria-hidden="true"
-              ><span></span><span></span><span></span></span
-          ></span>
+          <span
+            >Animated GIF detected. All frames will be preserved when
+            converting to GIF; other output formats will use the first frame
+            only.</span
+          >
         </div>
 
         <div
@@ -885,7 +889,7 @@
                   <span style="font-size: 11px; color: #71717a"
                     >Canvas background</span
                   >
-                  
+                  <!-- Hidden real color input kept for JS compatibility -->
                   <input
                     type="color"
                     id="canvasBgColor"
@@ -893,7 +897,7 @@
                     style="display: none"
                     aria-hidden="true"
                   />
-                  
+                  <!-- Custom color picker trigger -->
                   <div
                     class="wcp-trigger"
                     id="wcpTrigger"
@@ -917,7 +921,7 @@
                       aria-label="Hex colour value"
                     />
                   </div>
-                  
+                  <!-- Popover picker -->
                   <div class="wcp-popover" id="wcpPopover" hidden>
                     <div class="wcp-gradient" id="wcpGradient">
                       <canvas
@@ -1732,29 +1736,29 @@
 
     <script type="module" src="/app.js"></script>
 
-    
+    <!-- ═══ W.I.S. Custom Colour Picker ═══ -->
     <script>
       (function () {
-        
+        /* ── state ── */
         let h = 0,
           s = 0,
           v = 0,
           a = 1;
-        let prevHex = "#000000"; 
+        let prevHex = "#000000"; // for before/after preview
         let open = false;
 
-        
+        /* ── elements ── */
         const trigger = document.getElementById("wcpTrigger");
         const popover = document.getElementById("wcpPopover");
         const swatch = document.getElementById("wcpSwatch");
-        const hexInline = document.getElementById("wcpHexLabel"); 
+        const hexInline = document.getElementById("wcpHexLabel"); // inline editable input in trigger
         const svCanvas = document.getElementById("wcpSVCanvas");
         const hueCanvas = document.getElementById("wcpHueCanvas");
         const alphaCanvas = document.getElementById("wcpAlphaCanvas");
         const cursor = document.getElementById("wcpCursor");
         const hueThumb = document.getElementById("wcpHueThumb");
         const alphaThumb = document.getElementById("wcpAlphaThumb");
-        const hexInput = document.getElementById("wcpHexInput"); 
+        const hexInput = document.getElementById("wcpHexInput"); // hex input inside popover
         const rIn = document.getElementById("wcpRInput");
         const gIn = document.getElementById("wcpGInput");
         const bIn = document.getElementById("wcpBInput");
@@ -1771,7 +1775,7 @@
         const presets = document.querySelectorAll(".wcp-preset");
         if (!trigger) return;
 
-        
+        /* ── colour math ── */
         function hsvToRgb(H, S, V) {
           const f = (n) => {
             const k = (n + H * 6) % 6;
@@ -1856,7 +1860,7 @@
           ];
         }
 
-        
+        /* ── colour-theory helpers for dynamic, readable text/box fitting ── */
         function srgbToLinear(c) {
           c /= 255;
           return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
@@ -1877,11 +1881,17 @@
           return relLuminance(r, g, b) < 0.02 && r <= 24 && g <= 24 && b <= 24;
         }
 
-        const TRIGGER_BG = [18, 18, 22]; 
+        const TRIGGER_BG = [18, 18, 22]; // matches the trigger's normal panel colour
         const TRIGGER_BG_LUM = relLuminance(...TRIGGER_BG);
-        const PALE_BG = "#f4f4f5"; 
+        const PALE_BG = "#f4f4f5"; // fallback panel colour for pure-black picks
 
-        
+        /* text colour for the hex value sitting inside the fixed dark trigger panel:
+         – normally the text IS the picked colour (branded, at-a-glance readback)
+         – if that colour is too dark against the panel, its lightness is nudged up
+           (same hue/saturation) until it clears a legible contrast ratio
+         – if the colour is pure/near black, no amount of nudging still reads as
+           "black", so instead the panel itself flips pale and the true colour
+           is shown as-is (now readable against the light panel)          */
         function fitTriggerColour(r, g, b) {
           if (isNearBlack(r, g, b))
             return { panel: PALE_BG, text: `rgb(${r},${g},${b})` };
@@ -1893,7 +1903,7 @@
             guard < 24
           ) {
             ll = Math.min(1, ll + 0.045);
-            if (ss > 0) ss = Math.max(ss, 0.5); 
+            if (ss > 0) ss = Math.max(ss, 0.5); // only boost saturation if a hue actually exists — true grays stay gray
             [tr, tg, tb] = hslToRgb(hh, ss, ll);
             guard++;
           }
@@ -1903,7 +1913,12 @@
           };
         }
 
-        
+        /* readable label colour + box fill for a swatch whose OWN background
+         is the picked colour itself (the before/after preview strip):
+         – normally the swatch shows the true colour, and the label just
+           picks whichever of black/white contrasts best against it
+         – pure/near-black picks flip the swatch itself pale so the hex
+           label never has to sit on true black                          */
         function fitSwatchLabel(r, g, b) {
           if (isNearBlack(r, g, b))
             return { box: PALE_BG, text: "rgba(24,24,27,0.85)" };
@@ -1917,7 +1932,7 @@
           };
         }
 
-        
+        /* ── draw canvases ── */
         function drawSV() {
           const ctx = svCanvas.getContext("2d"),
             W = svCanvas.width,
@@ -1970,24 +1985,24 @@
           drawAlpha();
         }
 
-        
+        /* ── sync UI ── */
         function syncUI() {
           const [r, g, b] = hsvToRgb(h, s, v);
           const hex = toHex(r, g, b);
           const rgba = `rgba(${r},${g},${b},${a})`;
-          
+          /* trigger */
           swatch.style.background = rgba;
           if (document.activeElement !== hexInline) hexInline.value = hex;
           const fitT = fitTriggerColour(r, g, b);
           trigger.style.background = fitT.panel;
           hexInline.style.color = fitT.text;
-          
+          /* popover inputs */
           hexInput.value = hex;
           rIn.value = r;
           gIn.value = g;
           bIn.value = b;
           aIn.value = Math.round(a * 100);
-          
+          /* preview after — swatch shows the true colour (unless pure/near-black), label self-adjusts for legibility */
           const fitA = fitSwatchLabel(r, g, b);
           if (previewAfter)
             previewAfter.style.background = isNearBlack(r, g, b)
@@ -1997,17 +2012,17 @@
             previewAfterLabel.textContent = hex.toUpperCase();
             previewAfterLabel.style.color = fitA.text;
           }
-          
+          /* hidden real input → app.js */
           realInput.value = hex;
           realInput.dispatchEvent(new Event("input", { bubbles: true }));
           drawAll();
         }
 
-        
+        /* ── open / close ── */
         function openPicker() {
           if (open) return;
           open = true;
-          
+          /* snapshot "before" */
           prevHex = hexInline.value || realInput.value || "#000000";
           const beforeRgb = hexToRgb(prevHex) || [0, 0, 0];
           const fitB = fitSwatchLabel(...beforeRgb);
@@ -2047,7 +2062,9 @@
             Math.max(8, Math.min(tr.left, window.innerWidth - 250)) + "px";
         }
 
-        
+        /* ── trigger interaction:
+            clicking the swatch (or the trigger itself) opens the picker;
+            clicking/focusing the inline hex input stays inline ── */
         swatch.addEventListener("click", (e) => {
           e.stopPropagation();
           open ? closePicker() : openPicker();
@@ -2059,9 +2076,9 @@
           }
         });
 
-        
+        /* inline hex field – type to change colour directly */
         hexInline.addEventListener("focus", () => {
-          
+          /* select all on focus for quick replace */
           hexInline.select();
         });
         hexInline.addEventListener("input", () => {
@@ -2082,7 +2099,7 @@
             hexInline.blur();
             closePicker();
           }
-          
+          /* stop trigger click handler from firing */
           e.stopPropagation();
         });
         hexInline.addEventListener("click", (e) => e.stopPropagation());
@@ -2099,7 +2116,7 @@
           if (e.key === "Escape" && open) closePicker();
         });
 
-        
+        /* ── SV drag ── */
         function svFrom(e) {
           const r = svCanvas.getBoundingClientRect();
           s = clamp((e.clientX - r.left) / r.width, 0, 1);
@@ -2132,7 +2149,7 @@
         );
         document.addEventListener("touchend", () => (svDrag = false));
 
-        
+        /* ── hue drag ── */
         function hueFrom(e) {
           const r = hueCanvas.getBoundingClientRect();
           h = clamp((e.clientX - r.left) / r.width, 0, 1);
@@ -2164,7 +2181,7 @@
         );
         document.addEventListener("touchend", () => (hueDrag = false));
 
-        
+        /* ── alpha drag ── */
         function alphaFrom(e) {
           const r = alphaCanvas.getBoundingClientRect();
           a = clamp((e.clientX - r.left) / r.width, 0, 1);
@@ -2196,7 +2213,7 @@
         );
         document.addEventListener("touchend", () => (alphaDrag = false));
 
-        
+        /* ── popover hex input ── */
         hexInput.addEventListener("input", () => {
           let val = hexInput.value.trim();
           if (!val.startsWith("#")) val = "#" + val;
@@ -2207,7 +2224,7 @@
           }
         });
 
-        
+        /* ── RGB + alpha inputs ── */
         [rIn, gIn, bIn].forEach((inp) =>
           inp.addEventListener("input", () => {
             const r = clamp(+rIn.value || 0, 0, 255),
@@ -2222,7 +2239,7 @@
           syncUI();
         });
 
-        
+        /* ── presets ── */
         presets.forEach((p) => {
           p.style.background = p.dataset.color;
           p.addEventListener("click", () => {
@@ -2235,7 +2252,7 @@
           });
         });
 
-        
+        /* clicking the "before" half reverts to the prev colour */
         if (previewBefore)
           previewBefore.addEventListener("click", () => {
             const rgb = hexToRgb(prevHex);
@@ -2246,7 +2263,7 @@
             }
           });
 
-        
+        /* ── init ── */
         function initFromHex(hex) {
           const rgb = hexToRgb(hex);
           if (rgb) {
@@ -2277,7 +2294,7 @@
           });
         });
       }
-      
+      // Back-compat alias in case anything still calls the old name.
       var dismissWarnCallout = dismissCallout;
     </script>
   </body>
