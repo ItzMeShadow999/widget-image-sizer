@@ -448,9 +448,9 @@ function mediaFileNameFromUrl(url, contentType) {
 }
 
 async function fetchMediaAsFile(rawUrl, { acceptTypes } = {}) {
-  
-  
-  
+  // Accept any image or video by default — the "direct download" box
+  // isn't limited to mp4/gif anymore, just anything the browser can
+  // fetch directly (subject to the host allowing cross-origin reads).
   const types = acceptTypes ?? ["video/", "image/"];
 
   let url;
@@ -1680,10 +1680,10 @@ const PRESETS = {
 
 
 function getThemeAccentColor() {
-  
-  
-  
-  
+  // Reads the current theme's accent color from the --violet CSS variable
+  // (defined per-theme in styles.css) rather than hardcoding a color here,
+  // so canvas-drawn UI stays in sync with whatever theme is active — e.g.
+  // White mode sets --violet to black, Discord sets it to blurple, etc.
   const v = getComputedStyle(document.documentElement)
     .getPropertyValue('--violet').trim();
   return v || '#8b5cf6';
@@ -2436,7 +2436,19 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
 })();
 
 
+/* ══════════════════════════════════════════════════════════════════
+   Theme Switcher logic
+   ------------------------------------------------------------------
+   Requires:
+     - the theme CSS below in styles.css (variable palettes + all UI
+       styling, appended in the "Theme Switcher styles" block)
+     - an empty <div id="themeSwitcher"></div> somewhere in the page
+     - the tiny inline snippet in <head> that sets data-theme on
+       <html> before first paint (prevents a flash of the wrong theme)
 
+   Everything else — the trigger button, the popover, the White Mode
+   liability waiver modal — is built here and appended to the DOM.
+   ══════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
@@ -2462,8 +2474,10 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
   var root = document.documentElement;
   var currentTheme = DEFAULT_THEME;
 
-  
-  
+  /* ---------------- persistence ---------------- */
+  /* localStorage can throw in locked-down contexts (private tabs with
+     strict settings, sandboxed iframes) — never let a storage failure
+     break theming, just fall back to an in-memory choice. */
   function readStoredTheme() {
     try {
       var v = window.localStorage.getItem(STORAGE_KEY);
@@ -2473,10 +2487,10 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
     }
   }
   function writeStoredTheme(id) {
-    try { window.localStorage.setItem(STORAGE_KEY, id); } catch (e) {  }
+    try { window.localStorage.setItem(STORAGE_KEY, id); } catch (e) { /* ignore */ }
   }
 
-  
+  /* ---------------- witty console logs ---------------- */
   var THEME_LOG_MESSAGES = {
     original: '🌌 Back to the original. Familiar. Safe. A little boring, if we\u2019re honest.',
     white:    '⚡ Sigh, initiating flashbang... godspeed, your retinas were warned.',
@@ -2489,7 +2503,7 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
     if (msg) console.log('%c[W.I.S. Theme] ' + msg, 'color:#8b5cf6;font-weight:600;');
   }
 
-  
+  /* ---------------- core apply ---------------- */
   function applyTheme(id, opts) {
     opts = opts || {};
     var theme = THEME_LOOKUP[id] || THEME_LOOKUP[DEFAULT_THEME];
@@ -2502,12 +2516,12 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
     if (!opts.silent) logThemeChange(theme.id);
   }
 
-  
+  /* ---------------- trigger + popover UI ---------------- */
   var switcherRoot, triggerBtn, triggerSwatch, triggerLabel, popover;
 
   function buildSwitcherUI() {
     switcherRoot = document.getElementById('themeSwitcher');
-    if (!switcherRoot) return; 
+    if (!switcherRoot) return; // no mount point on this page — nothing to do
 
     switcherRoot.classList.add('theme-switcher');
 
@@ -2562,8 +2576,8 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
 
       opt.addEventListener('click', function () {
         if (theme.gated) {
-          
-          
+          // White Mode never applies on click alone — it has to clear
+          // the waiver first. See openGatekeeperModal().
           openGatekeeperModal(theme);
         } else {
           applyTheme(theme.id);
@@ -2619,7 +2633,15 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
     }
   }
 
-  
+  /* ══════════════════════════════════════════════════════════════
+     White Mode gatekeeper — the whole point of this exercise.
+     Clicking "PURE White" never applies the theme directly. It opens
+     this modal instead, and only the explicit "I AGREE" button calls
+     applyTheme('white'). Cancelling — button, backdrop click, or
+     Escape — is a full no-op: since the theme was never changed in
+     the first place, "rolling back" just means nothing happens, and
+     nothing gets written to localStorage.
+     ══════════════════════════════════════════════════════════════ */
 
   var modalRoot = null;
   var restoreFocusEl = null;
@@ -2692,8 +2714,8 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
     buildModal();
     restoreFocusEl = document.activeElement;
     modalRoot.hidden = false;
-    
-    
+    // Focus defaults to Cancel, not Confirm — blinding yourself should
+    // take a deliberate reach, not a stray Enter or Space keypress.
     modalRoot.querySelector('[data-action="cancel"]').focus();
     console.log('%c[W.I.S. Theme] White Mode requested. Presenting liability waiver\u2026', 'color:#fcd34d;font-weight:600;');
   }
@@ -2706,16 +2728,16 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
 
   function cancelGatekeeper() {
     console.log('%c[W.I.S. Theme] Waiver declined. Rolling back \u2014 your retinas thank you.', 'color:#6ee7b7;font-weight:600;');
-    
-    
-    
+    // No rollback logic needed here: applyTheme('white') was never
+    // called, so the previous theme was never disturbed. Cancelling
+    // is simply closing the modal and changing nothing.
     closeGatekeeperModal();
   }
 
   function confirmGatekeeper() {
     closeGatekeeperModal();
     flashbang(function () {
-      applyTheme('white'); 
+      applyTheme('white'); // now, and only now, does this get persisted
     });
   }
 
@@ -2726,18 +2748,18 @@ document.getElementById('canvasBgTransparent').addEventListener('change', () => 
     flash.className = 'theme-flashbang';
     document.body.appendChild(flash);
     flash.addEventListener('animationend', function () { flash.remove(); });
-    window.setTimeout(done, 120); 
+    window.setTimeout(done, 120); // swap the theme mid-flash so the reveal lands on white
   }
 
-  
+  /* ---------------- init ---------------- */
   function init() {
     buildSwitcherUI();
 
-    
-    
-    
-    
-    
+    // The inline <head> snippet already set data-theme before first
+    // paint — just read it back so this script's state agrees with
+    // what's on screen. Fall back to localStorage/default if for some
+    // reason that snippet didn't run (e.g. this script reused on a
+    // page without it).
     var existing = root.getAttribute('data-theme');
     if (existing && THEME_LOOKUP[existing]) {
       currentTheme = existing;
