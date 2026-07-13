@@ -85,6 +85,12 @@ Because it implements universal web standards and low-level canvas stream render
 
 <details>
   <summary>Patch Notes</summary>
+  
+ # PATCH NOTES // 2.7.1
+ 
+Fixed animated WEBP engine failing to load: now probes all known export shapes from the CDN module, adds two extra fallback sources, and gives a clearer error message if all sources fail.
+
+---
 
   # PATCH NOTES // 2.7
 
