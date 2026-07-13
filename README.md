@@ -13,7 +13,7 @@ A lightweight, blazing-fast browser utility designed to format, convert, and opt
 
 ##    How to Use
 
-1. **Access the App:** Visit [https://widgetimagestudio.vercel.app/](https://widgetimagestudio.vercel.app/) to use the tool instantly online. Alternatively, clone the repository and spin up a local server to run it **FULLY OFFLINE** for total data privacy.
+1. **Access the App:** Visit [𝚆.𝙸.𝚂 vercel](https://widgetimagestudio.vercel.app/) Or [𝚆.𝙸.𝚂 cloudflare](https://widget-image-studio.shadow-164.workers.dev/) to use the tool instantly online. Alternatively, clone the repository and spin up a local server to run it **FULLY OFFLINE** for total data privacy.
 2. **Process Your Assets:** Navigate to the specific functional tab required for your project (Framer, Converter, or Advanced Editor).
 3. **Configure & Tweak:** Drop your target files in, tweak the custom parameters, and watch the real-time layout updates process inside your browser canvas.
 4. **Export:** Click the download trigger to compile and save your highly-optimized production assets locally.
