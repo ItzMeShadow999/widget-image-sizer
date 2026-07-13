@@ -4,7 +4,6 @@
       [hidden] { display: none !important; }
       html, body { height: 100%; }
 
-      
       :root {
         --bg:          #0f1013;
         --surface:     rgba(22, 23, 28, 0.85);
@@ -28,7 +27,6 @@
         --font-mono:   'JetBrains Mono', 'Fira Code', monospace;
       }
 
-      
       body {
         font-family: 'Lexend', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         background: var(--bg);
@@ -46,13 +44,11 @@
 
       input, button, select, textarea { font: inherit; }
 
-      
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: transparent; }
       ::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 999px; }
       ::-webkit-scrollbar-thumb:hover { background: #3a3a45; }
 
-      
       .app {
         max-width: 980px;
         margin: 0 auto;
@@ -62,7 +58,6 @@
         min-height: 100vh;
       }
 
-      
       .titlebar {
         display: flex;
         align-items: center;
@@ -71,12 +66,7 @@
         height: 48px;
         flex-shrink: 0;
         user-select: none;
-        /* Some themes (e.g. Kawaii) add a backdrop-filter to this bar,
-           which creates its own stacking context and traps the theme
-           popover (a child, positioned absolute) inside it — that then
-           loses to later-in-DOM elements like #dropZone. An explicit
-           z-index here keeps the whole titlebar (and its popover) on
-           top regardless of what a theme adds to it. */
+
         position: relative;
         z-index: 50;
       }
@@ -105,7 +95,6 @@
         min-width: 0;
       }
 
-      
       .main-tabs {
         display: flex;
         gap: 2px;
@@ -144,7 +133,6 @@
       .tab-button[aria-selected="true"] { color: #fff; }
       .tab-button[aria-selected="true"]::after { opacity: 1; }
 
-      
       @keyframes wis-tab-flow {
         0%, 100% { background-position: 0% 50%; }
         50%      { background-position: 100% 50%; }
@@ -156,7 +144,6 @@
         animation: wis-tab-flow 3s ease-in-out infinite;
       }
 
-      
       .preview-wrap {
         flex: 1 1 auto;
         min-height: 260px;
@@ -213,8 +200,6 @@
         animation: spin 0.75s linear infinite;
       }
 
-      /* Inline "Loading..." text with animated dots, for use inside notes/labels
-         where the full .spinner circle would be too heavy (e.g. gif-note copy). */
       .loading-text { display: inline-flex; align-items: baseline; }
       .loading-dots { display: inline-flex; margin-left: 2px; }
       .loading-dots span {
@@ -269,7 +254,6 @@
         font-family: var(--font-mono);
       }
 
-      
       .input {
         width: 100%;
         background: rgba(18,18,22,0.7);
@@ -341,7 +325,6 @@
         min-width: 0; padding: 0;
       }
 
-      
       .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
       .field-label {
         font-size: 11px; font-weight: 500; color: var(--text-muted);
@@ -349,7 +332,6 @@
         white-space: nowrap;
       }
 
-      
       .status-bar {
         font-size: 12px; color: var(--text-muted); line-height: 1.5; min-height: 20px;
         transition: color 0.2s ease;
@@ -360,7 +342,6 @@
       .status-bar[data-tone="error"]   { color: var(--error); }
       .status-bar[data-tone="warn"]    { color: var(--warn); }
 
-      
       .section-divider {
         display: flex; align-items: center; gap: 10px;
         margin: 16px 0 12px;
@@ -372,7 +353,6 @@
       }
       .section-divider-line { flex: 1; height: 1px; background: var(--border); }
 
-      
       .toggle-switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; cursor: pointer; }
       .toggle-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
       .toggle-slider {
@@ -392,7 +372,6 @@
       .toggle-switch input:checked + .toggle-slider { background: #22c55e; border-color: rgba(255,255,255,0.14); box-shadow: inset 0 2px 4px rgba(0,0,0,0.18), 0 0 8px rgba(34,197,94,0.25); }
       .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); background: #fff; }
 
-      
       .warn-callout {
         display: flex; align-items: flex-start; gap: 10px;
         background: rgba(252,211,77,0.07);
@@ -429,17 +408,12 @@
       .warn-callout-close:active       { transform: scale(0.88); }
       .warn-callout-close:focus-visible { outline: none; opacity: 1; box-shadow: 0 0 0 2px rgba(252,211,77,0.5); }
 
-      
       @keyframes warnDisintegrate {
         0%   { opacity: 1;    filter: blur(0px); transform: scale(1)     translateY(0); }
         55%  { opacity: 0.45; filter: blur(2px); transform: scale(0.97)  translateY(-3px); }
         100% { opacity: 0;    filter: blur(7px); transform: scale(0.9)   translateY(-9px); }
       }
-      /* Shared dismiss mechanism: any .warn-callout or .gif-note can be
-         dismissed with the same disintegrate-then-collapse sequence.
-         is-dismissing plays the particle-y fade; once that animation
-         ends, JS locks in a pixel height and adds is-collapsing, which
-         this transition then animates down to 0 before removal. */
+
       .warn-callout, .gif-note {
         transition: height 0.32s cubic-bezier(0.4,0,0.2,1),
                     margin 0.32s cubic-bezier(0.4,0,0.2,1),
@@ -483,20 +457,15 @@
       .gif-note-close:active       { transform: scale(0.88); }
       .gif-note-close:focus-visible { outline: none; opacity: 1; box-shadow: 0 0 0 2px rgba(88,101,242,0.5); }
 
-      
-      
-      
       #framerPanel { display: flex; flex-direction: column; gap: 14px; }
 
       .framer-layout { display: flex; flex-direction: column; gap: 14px; }
 
-      
       .framer-source { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 6px; align-items: end; }
       .framer-source-inputs { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
       .framer-source-row { display: flex; gap: 6px; }
       .framer-source-row .input { flex: 1; min-width: 0; }
 
-      
       .framer-controls {
         display: grid;
         grid-template-columns: minmax(0,1fr) 100px 100px auto auto;
@@ -507,7 +476,6 @@
       .framer-output-row { display: flex; gap: 6px; align-items: end; min-width: 0; }
       .framer-output-row .input { flex: 1; min-width: 0; }
 
-      
       .format-chips { display: flex; gap: 4px; flex-wrap: wrap; }
       .format-chip {
         padding: 5px 10px;
@@ -530,15 +498,12 @@
         box-shadow: 0 0 0 1px rgba(88,101,242,0.15);
       }
 
-      
       .framer-output-block { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
       .framer-output-inner { display: flex; gap: 6px; align-items: stretch; }
       .framer-output-inner .input { flex: 1; min-width: 0; }
 
-      
       .framer-actions { display: flex; gap: 6px; align-self: end; }
 
-      
       .gear-btn {
         width: 36px; height: 36px; min-width: 0; padding: 0;
         display: flex; align-items: center; justify-content: center;
@@ -561,16 +526,12 @@
       .gear-btn[aria-pressed="true"] svg path { fill: url(#gearGrad); }
       .gear-btn svg.spin-once { animation: spin 0.55s linear 1; }
 
-      
       .advanced-panel { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.25s ease, opacity 0.18s ease; }
       .advanced-panel--open { max-height: 52px; opacity: 1; }
       .advanced-panel-inner { display: flex; align-items: center; gap: 14px; padding: 6px 2px 4px; flex-wrap: wrap; }
       .advanced-item { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
       .advanced-label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
 
-      
-      
-      
       #converterPanel { display: flex; flex-direction: column; gap: 14px; }
 
       .conv-source { display: grid; grid-template-columns: minmax(0,1fr); gap: 6px; }
@@ -659,16 +620,8 @@
 
       .conv-actions { display: flex; gap: 6px; align-self: end; }
 
-      
-      
-      
-      
-      
-
-      
       @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-      
       @media (max-width: 680px) {
         .framer-controls {
           grid-template-columns: 1fr 1fr;
@@ -684,18 +637,6 @@
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
       }
-
-
-
-
-
-
-
-
-
-
-
-
 
 #advancedEditorPanel .titlebar {
   display: flex; align-items: center; gap: 12px;
@@ -718,13 +659,11 @@
   margin-left: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-
 #advancedEditorPanel .ae-app {
   max-width: 1200px; margin: 0 auto;
   padding: 20px 24px 48px;
   display: flex; flex-direction: column; gap: 20px;
 }
-
 
 #advancedEditorPanel .card {
   background: rgba(12, 12, 15, 0.5);
@@ -760,7 +699,6 @@
 #advancedEditorPanel .card-subtitle { font-size: 11px; color: #52525b; margin-left: auto; }
 #advancedEditorPanel .card-body { padding: 16px 18px; }
 
-
 #advancedEditorPanel input[type="text"],
 #advancedEditorPanel input[type="number"],
 #advancedEditorPanel select {
@@ -789,7 +727,6 @@
 #advancedEditorPanel input[type="number"]::-webkit-inner-spin-button,
 #advancedEditorPanel input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-
 #advancedEditorPanel input[type="color"] {
   width: 36px; height: 36px; padding: 0;
   border-radius: 8px; cursor: pointer;
@@ -813,8 +750,6 @@
   border: none;
   border-radius: 7px;
 }
-
-
 
 #advancedEditorPanel input[type="range"] {
   width: 100%; background: none; border: none; padding: 9px 0;
@@ -928,13 +863,11 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 0 0 3px rgba(12,12,15,0.9), 0 0 0 5px rgba(139,92,246,0.6);
 }
 
-
 #advancedEditorPanel label.field-label {
   display: block; font-size: 11px; font-weight: 600;
   color: #a1a1aa; margin-bottom: 6px;
   letter-spacing: 0.01em; text-transform: uppercase;
 }
-
 
 #advancedEditorPanel button {
   border: 1px solid rgba(139, 92, 246, 0.3);
@@ -964,7 +897,6 @@
   box-shadow: 0 0 0 2px rgba(24, 24, 27, 0.8), 0 0 0 4px rgba(139, 92, 246, 0.4);
 }
 #advancedEditorPanel button:disabled { opacity: 0.35; cursor: not-allowed; }
-
 
 #advancedEditorPanel button::after {
   content: ""; position: absolute;
@@ -999,7 +931,6 @@
   animation-play-state: paused;
 }
 
-
 #advancedEditorPanel button.danger {
   background: rgba(239, 68, 68, 0.1);
   border-color: rgba(239, 68, 68, 0.35);
@@ -1014,7 +945,6 @@
   border-color: rgba(239, 68, 68, 0.6);
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
 }
-
 
 #advancedEditorPanel button.success {
   background: rgba(34, 197, 94, 0.1);
@@ -1031,13 +961,11 @@
   box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
 }
 
-
 #advancedEditorPanel .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 #advancedEditorPanel .grid-main { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
 #advancedEditorPanel .row { display: flex; gap: 8px; align-items: flex-end; }
 #advancedEditorPanel .row-center { display: flex; gap: 8px; align-items: center; }
 #advancedEditorPanel .spacer { flex: 1; }
-
 
 #advancedEditorPanel .tabs {
   display: flex; gap: 2px; padding: 4px;
@@ -1057,7 +985,6 @@
 }
 #advancedEditorPanel .tab-panel { display: none; }
 #advancedEditorPanel .tab-panel.active { display: block; }
-
 
 #advancedEditorPanel .preset-grid {
   display: grid;
@@ -1087,7 +1014,6 @@
 #advancedEditorPanel .preset-name { font-size: 11px; color: #a1a1aa; text-align: center; }
 #advancedEditorPanel .preset-size { font-size: 10px; color: #52525b;  text-align: center; font-variant-numeric: tabular-nums; }
 
-
 #advancedEditorPanel .format-grid { display: flex; flex-wrap: wrap; gap: 6px; }
 #advancedEditorPanel .format-chip {
   padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
@@ -1105,7 +1031,6 @@
   box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
 }
 
-
 #advancedEditorPanel .swatch-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 #advancedEditorPanel .swatch {
   width: 30px; height: 30px; border-radius: 7px;
@@ -1114,7 +1039,6 @@
 }
 #advancedEditorPanel .swatch:hover { transform: scale(1.15); border-color: rgba(139,92,246,0.5); box-shadow: 0 0 12px rgba(139,92,246,0.3); }
 #advancedEditorPanel .swatch.selected { border-color: #8b5cf6; transform: scale(1.15); box-shadow: 0 0 16px rgba(139,92,246,0.4); }
-
 
 #advancedEditorPanel .adj-row {
   display: grid; grid-template-columns: 120px 1fr 60px;
@@ -1130,7 +1054,6 @@
   font-size: 11px; color: #8b5cf6; text-align: right;
   font-variant-numeric: tabular-nums; font-weight: 600;
 }
-
 
 #advancedEditorPanel .canvas-wrap {
   width: 100%; aspect-ratio: 16/9;
@@ -1164,7 +1087,6 @@
 }
 #advancedEditorPanel .canvas-overlay-empty svg { opacity: 0.3; }
 
-
 #advancedEditorPanel .status-bar {
   font-size: 12px; padding: 2px 0; min-height: 18px;
   transition: color 0.2s; color: #52525b;
@@ -1172,7 +1094,6 @@
 #advancedEditorPanel .status-bar[data-tone="success"] { color: #6ee7b7; }
 #advancedEditorPanel .status-bar[data-tone="error"] { color: #fca5a5; }
 #advancedEditorPanel .status-bar[data-tone="info"] { color: #93c5fd; }
-
 
 #advancedEditorPanel .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; cursor: pointer; }
 #advancedEditorPanel .toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
@@ -1195,14 +1116,12 @@
 }
 #advancedEditorPanel .toggle input:checked + .toggle-track::before { transform: translateX(18px); background: #a78bfa; }
 
-
 #advancedEditorPanel .section-sep {
   height: 1px;
   background: linear-gradient(90deg,
     rgba(139,92,246,0.1) 0%, rgba(139,92,246,0.2) 50%, rgba(139,92,246,0.1) 100%);
   margin: 14px 0;
 }
-
 
 #advancedEditorPanel .badge {
   display: inline-flex; align-items: center; gap: 4px;
@@ -1211,7 +1130,6 @@
 }
 #advancedEditorPanel .badge-purple { background: rgba(139,92,246,0.18); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.25); }
 #advancedEditorPanel .badge-yellow { background: rgba(251,191,36,0.15); color: #fde68a; border: 1px solid rgba(251,191,36,0.22); }
-
 
 #advancedEditorPanel .filter-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
 #advancedEditorPanel .filter-strip::-webkit-scrollbar { height: 3px; }
@@ -1234,7 +1152,6 @@
 }
 #advancedEditorPanel .filter-tile canvas { width: 56px; height: 56px; display: block; }
 #advancedEditorPanel .filter-tile-name { font-size: 10px; color: #71717a; }
-
 
 #advancedEditorPanel .rotation-ring {
   width: 80px; height: 80px; border-radius: 50%;
@@ -1262,7 +1179,6 @@
 }
 #advancedEditorPanel .rotation-val { font-size: 14px; font-weight: 700; color: #a78bfa; position: relative; z-index: 1; }
 
-
 #advancedEditorPanel .flip-row { display: flex; gap: 8px; }
 #advancedEditorPanel .flip-btn {
   flex: 1; padding: 10px; font-size: 12px; font-weight: 600; border-radius: 8px;
@@ -1281,7 +1197,6 @@
 }
 #advancedEditorPanel .flip-btn:hover .flip-icon { transform: scale(1.25); }
 #advancedEditorPanel .flip-btn:active .flip-icon { transform: scale(0.95) rotate(8deg); }
-
 
 #advancedEditorPanel .budget-bar-wrap {
   background: rgba(24, 24, 27, 0.6); border-radius: 8px; overflow: hidden;
@@ -1307,7 +1222,6 @@
 #advancedEditorPanel .budget-tier-limit { font-size: 11px; color: #52525b; }
 #advancedEditorPanel .budget-tier-size { font-size: 12px; font-weight: 600; margin-left: auto; font-variant-numeric: tabular-nums; color: #a1a1aa; }
 
-
 #advancedEditorPanel .tip-line { padding: 2px 0; line-height: 1.6; }
 #advancedEditorPanel .tip-warn { color: #fcd34d; }
 #advancedEditorPanel .tip-info { color: #93c5fd; }
@@ -1321,7 +1235,6 @@
 
 @media (prefers-reduced-motion: reduce) {
 }
-
 
 @keyframes wis-ae-brand-shimmer {
   0%, 100% { background-position: 0% 50%; }
@@ -1344,12 +1257,6 @@
   font-size: 12px; color: #71717a;
 }
 
-
-/* ═══════════════════════════════════════════
-   W.I.S. Custom Colour Picker
-   ═══════════════════════════════════════════ */
-
-/* ── trigger ── */
 .wcp-trigger {
   display: inline-flex;
   align-items: center;
@@ -1371,7 +1278,6 @@
   box-shadow: 0 0 0 3px rgba(139,92,246,0.14);
 }
 
-/* colour swatch square – click opens picker */
 .wcp-swatch {
   width: 28px; height: 28px;
   border-radius: 6px 0 0 6px;
@@ -1384,7 +1290,6 @@
 }
 .wcp-swatch:hover { filter: brightness(1.15); }
 
-/* inline editable hex field */
 .wcp-hex-inline {
   font-size: 11px;
   font-family: 'JetBrains Mono', monospace;
@@ -1405,7 +1310,6 @@
   background: rgba(139,92,246,0.1);
 }
 
-/* ── before / after preview strip ── */
 .wcp-preview-row {
   display: flex;
   height: 28px;
@@ -1434,13 +1338,12 @@
   justify-content: center;
   font-size: 11px;
   color: rgba(255,255,255,0);
-  mix-blend-mode: difference; /* stays visible against any swatch colour, incl. the pale near-black fallback */
+  mix-blend-mode: difference; 
   transition: color 0.15s;
 }
 .wcp-preview-before:hover::after { color: rgba(255,255,255,0.75); }
 .wcp-preview-after { border-left: 1px solid rgba(0,0,0,0.2); }
 
-/* hex-value label overlaid on each preview swatch — colour is set dynamically in JS */
 .wcp-preview-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9.5px;
@@ -1449,7 +1352,6 @@
   user-select: none;
 }
 
-/* ── popover panel ── */
 .wcp-popover {
   position: fixed;
   z-index: 9999;
@@ -1469,7 +1371,6 @@
   gap: 10px;
 }
 
-/* ── SV gradient canvas ── */
 .wcp-gradient {
   position: relative;
   width: 100%;
@@ -1496,7 +1397,6 @@
   transition: none;
 }
 
-/* ── hue & alpha tracks ── */
 .wcp-hue-row, .wcp-alpha-row {
   position: relative;
   height: 12px;
@@ -1522,7 +1422,6 @@
   left: 0;
 }
 
-/* ── text inputs ── */
 .wcp-inputs {
   display: flex;
   gap: 5px;
@@ -1567,7 +1466,6 @@
   display: block;
 }
 
-/* ── preset swatches ── */
 .wcp-swatches {
   display: flex;
   gap: 5px;
@@ -1587,34 +1485,8 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
-
-/* ══════════════════════════════════════════════════════════════════
-   Theme Switcher styles
-   ------------------------------------------------------------------
-   How this works:
-   - The styles above already drive the whole app's look through CSS
-     custom properties on :root (--bg, --surface, --accent, etc).
-   - Each theme below is just a fresh set of values for those same
-     variables, scoped under :root[data-theme="..."]. Nothing above
-     needs to change — components that already read the variables
-     re-theme automatically.
-   - A handful of older selectors above hardcode near-white text
-     (titlebar brand, active tab, etc.) instead of using a variable,
-     which breaks on the two light themes. Those get small, explicit
-     patches below, clearly labelled.
-   - Scope note: the Advanced Editor tab and the custom colour-picker
-     popover use their own bespoke dark-glass styling throughout and
-     are intentionally left as-is here — re-skinning ~150 hand-tuned
-     selectors was out of scope for this pass. Their page background
-     still follows the theme since it inherits var(--bg).
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ---------- 1. Theme palettes ---------- */
-
 :root[data-theme="original"] {
-  /* This is just styles.css's own default — declared explicitly so
-     switching "back" to Original is a real, deliberate state change
-     rather than "the absence of a theme". */
+
   --bg:          #0f1013;
   --surface:     rgba(22, 23, 28, 0.85);
   --surface-hi:  rgba(30, 32, 40, 0.9);
@@ -1636,12 +1508,6 @@
   --radius-lg:   14px;
 }
 
-/* Theme 2: The Broadsheet — Black & White Newspaper Mode ------------
-   Strict grayscale (no hue anywhere), flat newsprint surfaces, hard
-   square corners, and a typewriter face throughout (see the "WHITE
-   FULL RETHEME" section below for the font/shadow/radius takeover
-   and every hardcoded-color patch). Status states read by weight and
-   underline/border treatment instead of color. */
 :root[data-theme="white"] {
   --bg:          #ffffff;
   --surface:     #ffffff;
@@ -1656,9 +1522,7 @@
   --text:        #000000;
   --text-muted:  #333333;
   --text-dim:    #6b6b6b;
-  /* Grayscale only — no hue allowed in this theme. Status states are
-     distinguished by lightness (and weight, in the callout/status
-     markup) instead of color. */
+
   --success:     #000000;
   --error:       #000000;
   --warn:        #000000;
@@ -1667,9 +1531,6 @@
   --radius-lg:   0px;
 }
 
-/* Theme 3: Kawaii Pink & Cute ---------------------------------------
-   Deep bubbly pinks with lilac accents, very round corners.
-   Every gradient leans pink→lilac for full cohesion. */
 :root[data-theme="kawaii"] {
   --bg:          #fff0f5;
   --surface:     linear-gradient(135deg, #ffe3ec 0%, #f5d6f2 100%);
@@ -1693,8 +1554,6 @@
   --radius-lg:   32px;
 }
 
-/* Theme 4: Discord Replica -------------------------------------------
-   Exact Discord dark-mode hex codes. */
 :root[data-theme="discord"] {
   --bg:          #313338;
   --surface:     #2b2d31;
@@ -1717,9 +1576,6 @@
   --radius-lg:   12px;
 }
 
-/* Theme 5: Edgelord Gothic --------------------------------------------
-   Pure deep blacks, dripping aggressive dark-red accents. Sharp,
-   unrounded corners — no cute allowed here. */
 :root[data-theme="gothic"] {
   --bg:          #050505;
   --surface:     #120606;
@@ -1742,11 +1598,6 @@
   --radius-lg:   4px;
 }
 
-/* ---------- 2. Ambient background glow per theme ---------- */
-/* styles.css hardcodes the body's radial-gradient glow to the
-   original accent colours rather than reading a variable — give each
-   theme its own, and let White Mode go fully flat and shadeless. */
-
 :root[data-theme="white"] body {
   background-color: #ffffff;
   background-image:
@@ -1768,10 +1619,6 @@
     radial-gradient(ellipse 80% 60% at 80% -10%, rgba(128,0,0,0.2) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 10% 100%, rgba(74,0,0,0.16) 0%, transparent 55%);
 }
-
-/* ---------- 3. Patches for hardcoded (non-variable) colors ---------- */
-/* These only matter on the two light themes — on dark themes the
-   original hardcoded near-white values still read fine. */
 
 :root[data-theme="white"] .titlebar-brand,
 :root[data-theme="kawaii"] .titlebar-brand { color: var(--text); }
@@ -1800,10 +1647,6 @@
 :root[data-theme="gothic"] ::-webkit-scrollbar-thumb:hover { background: rgba(255,0,0,0.55); }
 :root[data-theme="discord"] ::-webkit-scrollbar-thumb { background: #1a1b1e; }
 :root[data-theme="discord"] ::-webkit-scrollbar-thumb:hover { background: #4e5058; }
-
-/* ══════════════════════════════════════════════════════════════════
-   4. Trigger + popover UI
-   ══════════════════════════════════════════════════════════════════ */
 
 .theme-switcher {
   position: relative;
@@ -1838,10 +1681,7 @@
   border-radius: 50%;
   border: 1px solid var(--border-hi);
   flex-shrink: 0;
-  /* Was unfilled — the trigger's dot was an empty ring with nothing to
-     show which theme is active. This is meant to be dynamic: it just
-     reads the live --accent var, so it always matches whatever theme
-     is currently applied without needing its own per-theme override. */
+
   background: var(--accent);
 }
 
@@ -1907,10 +1747,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* ══════════════════════════════════════════════════════════════════
-   5. Gatekeeper modal (White Mode liability waiver)
-   ══════════════════════════════════════════════════════════════════ */
 
 .theme-modal-backdrop {
   position: fixed;
@@ -1998,7 +1834,6 @@
 .theme-modal-btn--confirm:hover { filter: brightness(1.15); }
 .theme-modal-btn--confirm:focus-visible { box-shadow: 0 0 0 2px rgba(252,211,77,0.5); }
 
-/* ---------- 6. The flashbang itself ---------- */
 .theme-flashbang {
   position: fixed;
   inset: 0;
@@ -2024,22 +1859,6 @@
   .theme-popover { right: -2px; width: 210px; }
 }
 
-
-
-/* ══════════════════════════════════════════════════════════════════
-   WHITE FULL RETHEME — "The Broadsheet", strict black & white
-   newspaper mode. Every component below is deliberately overridden
-   (not left to fall back to var()-only styling) so nothing keeps the
-   dark "glass" chrome the other themes use — this mode reads like a
-   typewritten page, not a screen.
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ── Global takeover: typewriter face + flat, square, shadeless UI ──
-   Handles font-family/border-radius/box-shadow/text-shadow/backdrop-
-   filter for every element in one place, since dozens of selectors
-   throughout this file hardcode those instead of reading a variable.
-   Focus rings are restored via outline (crisp, on-brand for this
-   theme) since box-shadow is stripped globally. */
 :root[data-theme="white"] * {
   font-family: 'Courier Prime', 'Special Elite', 'Courier New', Courier, monospace !important;
   border-radius: 0 !important;
@@ -2053,15 +1872,12 @@
   outline-offset: 2px;
 }
 
-/* ── Scrollbar ── */
 :root[data-theme="white"] ::-webkit-scrollbar-track { background: #f0f0f0; }
 :root[data-theme="white"] ::-webkit-scrollbar-thumb { background: #000; }
 :root[data-theme="white"] ::-webkit-scrollbar-thumb:hover { background: #333; }
 
-/* ── Selection ── */
 :root[data-theme="white"] ::selection { background: #000; color: #fff; }
 
-/* ── Titlebar (masthead) ── */
 :root[data-theme="white"] .titlebar {
   background: #ffffff;
   border-bottom: 3px double #000;
@@ -2080,7 +1896,6 @@
 :root[data-theme="white"] .titlebar-sep { background: rgba(0,0,0,0.4); }
 :root[data-theme="white"] #titlebarStatus { color: #333; }
 
-/* ── Main tabs (section rules, not pill tabs) ── */
 :root[data-theme="white"] .main-tabs { border-bottom: 1px solid rgba(0,0,0,0.4); }
 :root[data-theme="white"] .tab-button {
   color: #333;
@@ -2096,7 +1911,6 @@
   animation: none;
 }
 
-/* ── Preview wrap ── */
 :root[data-theme="white"] .preview-wrap {
   background: #ffffff;
   border: 1px solid rgba(0,0,0,0.4);
@@ -2134,7 +1948,6 @@
   border-top: 1px solid rgba(0,0,0,0.2);
 }
 
-/* ── Buttons (ink-stamp style: flips to solid black on hover) ── */
 :root[data-theme="white"] .btn {
   background: #ffffff;
   border: 1px solid #000;
@@ -2151,7 +1964,6 @@
 }
 :root[data-theme="white"] .btn-primary:hover { background: #262626; border-color: #262626; }
 
-/* ── Inputs (underline style, like a typewritten form field) ── */
 :root[data-theme="white"] .input {
   background: #ffffff;
   border: none;
@@ -2165,22 +1977,16 @@
 }
 :root[data-theme="white"] .input[readonly] { color: #444; }
 
-/* ── Field labels ── */
 :root[data-theme="white"] .field-label { color: #333; text-transform: uppercase; letter-spacing: 0.04em; }
 
-/* ── Status bar ── */
 :root[data-theme="white"] .status-bar { color: #333; }
 :root[data-theme="white"] .status-bar[data-tone="success"] { color: #000; font-weight: 700; }
 :root[data-theme="white"] .status-bar[data-tone="error"]   { color: #000; font-weight: 700; text-decoration: underline wavy; }
 :root[data-theme="white"] .status-bar[data-tone="warn"]    { color: #000; font-style: italic; }
 
-/* ── Section divider (column rule) ── */
 :root[data-theme="white"] .section-divider-label { color: #000; font-weight: 700; letter-spacing: 0.08em; }
 :root[data-theme="white"] .section-divider-line { background: #000; }
 
-/* ── Toggle switch: square thumb + "blast door" wipe (same treatment as
-   the Advanced Editor's .toggle, kept here since this is a separate
-   component with identical markup used elsewhere in the app) ── */
 :root[data-theme="white"] .toggle-slider {
   background: #ffffff;
   border: 1px solid #000;
@@ -2221,7 +2027,6 @@
   }
 }
 
-/* ── Warn callout (styled like a boxed "correction notice") ── */
 :root[data-theme="white"] .warn-callout {
   background: #ffffff;
   border: 1px solid #000;
@@ -2231,7 +2036,6 @@
 :root[data-theme="white"] .warn-callout-close { color: #000; }
 :root[data-theme="white"] .warn-callout-close:hover { opacity: 1; background: #000; color: #fff; }
 
-/* ── Format chips ── */
 :root[data-theme="white"] .format-chip {
   background: #ffffff;
   border: 1px solid rgba(0,0,0,0.4);
@@ -2240,7 +2044,6 @@
 :root[data-theme="white"] .format-chip:hover { border-color: #000; color: #000; }
 :root[data-theme="white"] .format-chip.active { background: #000; border-color: #000; color: #fff; }
 
-/* ── Quality slider ── */
 :root[data-theme="white"] .quality-slider {
   background: linear-gradient(to right, #000 0%, #000 var(--pct, 80%), #f0f0f0 var(--pct, 80%), #f0f0f0 100%);
 }
@@ -2248,7 +2051,6 @@
 :root[data-theme="white"] .quality-slider::-moz-range-thumb { border-color: #000; background: #000; }
 :root[data-theme="white"] .quality-val { color: #000; }
 
-/* ── GIF / video notes (boxed newspaper notices) ── */
 :root[data-theme="white"] .gif-note {
   background: #ffffff;
   border: 1px dashed #000;
@@ -2257,7 +2059,6 @@
 :root[data-theme="white"] .gif-note-close { color: #000; }
 :root[data-theme="white"] .gif-note-close:hover { opacity: 1; background: #000; color: #fff; }
 
-/* ── Conv format select ── */
 :root[data-theme="white"] .conv-format-select {
   background-color: #ffffff;
   border: 1px solid #000;
@@ -2266,10 +2067,6 @@
 :root[data-theme="white"] .conv-format-select:focus { border: 2px solid #000; }
 :root[data-theme="white"] .conv-format-select option { background: #fff; color: #000; }
 
-/* ── Advanced Editor: native range sliders (Brightness/Contrast/etc, Angle) ──
-   This was missing entirely — Kawaii/Discord/Gothic all recolor these, but
-   White never got an override, so they fell through to the hardcoded
-   default purple track fill, thumb gradient, and hover/focus glow. */
 :root[data-theme="white"] #advancedEditorPanel input[type="range"]::-webkit-slider-track {
   background:
     linear-gradient(90deg, #000 0%, #000 calc(var(--pct, 0%)), #e0e0e0 calc(var(--pct, 0%)), #e0e0e0 100%);
@@ -2315,7 +2112,6 @@
   box-shadow: 0 0 0 3px #fff, 0 0 0 5px #000;
 }
 
-/* ── Advanced Editor panel (previously left dark/unstyled — now flat B&W) ── */
 :root[data-theme="white"] #advancedEditorPanel .titlebar-brand,
 :root[data-theme="white"] #advancedEditorPanel .ae-brand {
   color: #000; background: none; -webkit-background-clip: initial; background-clip: initial; animation: none;
@@ -2368,17 +2164,7 @@
 :root[data-theme="white"] #advancedEditorPanel .status-bar[data-tone="success"],
 :root[data-theme="white"] #advancedEditorPanel .status-bar[data-tone="error"],
 :root[data-theme="white"] #advancedEditorPanel .status-bar[data-tone="info"] { color: #000; }
-/* ── Toggles: square thumb + "blast door" wipe (instead of a sliding pill) ──
-   .toggle-track itself is already forced square by the global wildcard
-   (border-radius:0 !important on every real element), but its ::before
-   thumb is a pseudo-element the wildcard can't reach, so it stayed a
-   circle — squared off explicitly below.
-   The "wipe" is a second pseudo-element (::after) sitting between the
-   track's background and the thumb: it's a solid black fill whose width
-   animates from 0 → 100% over the exact same duration/easing as the
-   thumb's slide, so the black edge appears to travel *with* the thumb
-   rather than the track just flipping color instantly. Reversed on
-   uncheck, so it "unpaints" back to white as the thumb returns. */
+
 :root[data-theme="white"] #advancedEditorPanel .toggle-track {
   background: #ffffff;
   border: 1px solid #000;
@@ -2428,7 +2214,6 @@
 :root[data-theme="white"] #advancedEditorPanel .tip-info,
 :root[data-theme="white"] #advancedEditorPanel .tip-good { color: #000; }
 
-/* ── Color picker popover (used by the Advanced Editor's tint tool) ── */
 :root[data-theme="white"] .wcp-trigger:hover { border-color: #000; background: #f0f0f0; }
 :root[data-theme="white"] .wcp-trigger--open { border-color: #000 !important; }
 :root[data-theme="white"] .wcp-hex-inline:focus { color: #000; background: #f0f0f0; }
@@ -2436,28 +2221,11 @@
 :root[data-theme="white"] .wcp-input:focus { border-color: #000; background: #f0f0f0; }
 :root[data-theme="white"] .wcp-input-label { color: #333; }
 
-/* ── Theme-switcher modal ── */
 :root[data-theme="white"] .theme-modal { background: #ffffff; border: 1px solid #000; }
 :root[data-theme="white"] .theme-modal-title { color: #000; }
 :root[data-theme="white"] .theme-modal-btn--confirm { background: #000; color: #fff; border: 1px solid #000; }
 :root[data-theme="white"] .theme-modal-btn--confirm:hover { background: #262626; }
 
-/* ══════════════════════════════════════════════════════════════════
-   KAWAII FULL RETHEME — every hardcoded dark value overridden
-   Palette:
-     --k-rose:      #ff80b0   (vivid pink)
-     --k-petal:     #ffb3cc   (light blossom)
-     --k-blush:     #ffd6e7   (soft blush)
-     --k-cream:     #fff0f5   (parchment pink)
-     --k-lilac:     #e8b4f8   (bubbly lilac accent)
-     --k-mauve:     #c07ab8   (deeper petal)
-     --k-plum:      #8a3a6e   (rich plum text)
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ── Body gradient: full bubbly pink wash ──
-   IMPORTANT: single background shorthand only — never split into
-   background + background-image or the flat base creates a seam.
-   background-attachment:fixed keeps it cohesive at any scroll depth. */
 :root[data-theme="kawaii"] body {
   background:
     radial-gradient(ellipse 110% 55% at 90%   0%, rgba(255,128,176,0.38) 0%, transparent 58%),
@@ -2467,15 +2235,12 @@
   background-attachment: fixed;
 }
 
-/* ── Scrollbar ── */
 :root[data-theme="kawaii"] ::-webkit-scrollbar-track { background: rgba(255,182,210,0.08); }
 :root[data-theme="kawaii"] ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ffb3cc, #e8b4f8); border-radius: 999px; }
 :root[data-theme="kawaii"] ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #ff80b0, #c07ab8); }
 
-/* ── Selection ── */
 :root[data-theme="kawaii"] ::selection { background: rgba(255,105,180,0.38); color: #5c1f3a; }
 
-/* ── Titlebar ── */
 :root[data-theme="kawaii"] .titlebar {
   background: linear-gradient(90deg, rgba(255,220,235,0.7) 0%, rgba(232,180,248,0.4) 100%);
   border-radius: 0 0 16px 16px;
@@ -2493,7 +2258,6 @@
 :root[data-theme="kawaii"] .titlebar-sep { background: rgba(255,130,180,0.4); }
 :root[data-theme="kawaii"] #titlebarStatus { color: #b06a8f; }
 
-/* ── Tabs ── */
 :root[data-theme="kawaii"] .main-tabs { border-bottom-color: rgba(255,130,180,0.28); }
 :root[data-theme="kawaii"] .tab-button { color: #c07ab8; }
 :root[data-theme="kawaii"] .tab-button:hover { color: #8a3a6e; background: none; }
@@ -2504,7 +2268,6 @@
   background-size: 250% 100%;
 }
 
-/* ── Preview wrap ── */
 :root[data-theme="kawaii"] .preview-wrap {
   background: linear-gradient(135deg, rgba(255,230,242,0.8) 0%, rgba(255,209,230,0.7) 100%);
   border-color: rgba(255,130,180,0.3);
@@ -2542,7 +2305,6 @@
   color: #b06a8f;
 }
 
-/* ── Buttons ── */
 :root[data-theme="kawaii"] .btn {
   background: linear-gradient(135deg, rgba(255,220,235,0.85) 0%, rgba(232,180,248,0.55) 100%);
   border-color: rgba(255,130,180,0.45);
@@ -2567,7 +2329,6 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 20px rgba(255,128,176,0.42);
 }
 
-/* ── Inputs ── */
 :root[data-theme="kawaii"] .input {
   background: rgba(255,240,250,0.8);
   border-color: rgba(255,150,190,0.4);
@@ -2581,20 +2342,16 @@
 }
 :root[data-theme="kawaii"] .input[readonly] { color: #b06a8f; }
 
-/* ── Field labels ── */
 :root[data-theme="kawaii"] .field-label { color: #c07ab8; }
 
-/* ── Status bar ── */
 :root[data-theme="kawaii"] .status-bar { color: #c07ab8; }
 :root[data-theme="kawaii"] .status-bar[data-tone="success"] { color: #4caf7d; }
 :root[data-theme="kawaii"] .status-bar[data-tone="error"]   { color: #e0557a; }
 :root[data-theme="kawaii"] .status-bar[data-tone="warn"]    { color: #c98226; }
 
-/* ── Section divider ── */
 :root[data-theme="kawaii"] .section-divider-label { color: #d9a8c2; }
 :root[data-theme="kawaii"] .section-divider-line { background: rgba(255,150,190,0.28); }
 
-/* ── Toggle switch ── */
 :root[data-theme="kawaii"] .toggle-slider { background: rgba(255,210,230,0.6); border-color: rgba(255,150,190,0.35); }
 :root[data-theme="kawaii"] .toggle-slider::before { background: #e8b4f8; }
 :root[data-theme="kawaii"] .toggle-switch input:checked + .toggle-slider {
@@ -2604,7 +2361,6 @@
 }
 :root[data-theme="kawaii"] .toggle-switch input:checked + .toggle-slider::before { background: #fff; }
 
-/* ── Warn callout ── */
 :root[data-theme="kawaii"] .warn-callout {
   background: rgba(255,200,100,0.1);
   border-color: rgba(201,130,38,0.3);
@@ -2614,7 +2370,6 @@
 :root[data-theme="kawaii"] .warn-callout-close:hover { opacity: 1; background: rgba(201,130,38,0.16); }
 :root[data-theme="kawaii"] .warn-callout-close:focus-visible { outline: none; opacity: 1; box-shadow: 0 0 0 2px rgba(201,130,38,0.5); }
 
-/* ── Format chips (tab 1/2) ── */
 :root[data-theme="kawaii"] .format-chip {
   background: rgba(255,235,245,0.7);
   border-color: rgba(255,150,190,0.3);
@@ -2627,7 +2382,6 @@
   color: #6e2548;
 }
 
-/* ── Quality slider ── */
 :root[data-theme="kawaii"] .quality-slider {
   background: linear-gradient(to right, #ff80b0 0%, #ff80b0 var(--pct, 80%), rgba(255,200,220,0.4) var(--pct, 80%), rgba(255,200,220,0.4) 100%);
 }
@@ -2635,7 +2389,6 @@
 :root[data-theme="kawaii"] .quality-slider::-moz-range-thumb { border-color: #ff80b0; }
 :root[data-theme="kawaii"] .quality-val { color: #8a3a6e; }
 
-/* ── GIF note ── */
 :root[data-theme="kawaii"] .gif-note {
   background: rgba(255,150,190,0.1);
   border-color: rgba(255,130,180,0.3);
@@ -2644,7 +2397,6 @@
 :root[data-theme="kawaii"] .gif-note-close { color: #c07ab8; }
 :root[data-theme="kawaii"] .gif-note-close:hover { opacity: 1; background: rgba(255,130,180,0.2); }
 
-/* ── Conv format select ── */
 :root[data-theme="kawaii"] .conv-format-select {
   background-color: rgba(255,240,250,0.85);
   border-color: rgba(255,150,190,0.4);
@@ -2656,11 +2408,6 @@
 }
 :root[data-theme="kawaii"] .conv-format-select option { background: #fff0f5; color: #7a3358; }
 
-/* ══════════════════════════════════════════════════════════════════
-   KAWAII — Advanced Editor Panel: full override
-   ══════════════════════════════════════════════════════════════════ */
-
-/* Card */
 :root[data-theme="kawaii"] #advancedEditorPanel .card {
   background: linear-gradient(135deg, rgba(255,235,245,0.82) 0%, rgba(232,210,248,0.55) 100%);
   border-color: rgba(255,150,190,0.35);
@@ -2681,7 +2428,6 @@
 :root[data-theme="kawaii"] #advancedEditorPanel .card-title { color: #7a3358; }
 :root[data-theme="kawaii"] #advancedEditorPanel .card-subtitle { color: #d9a8c2; }
 
-/* Brand */
 :root[data-theme="kawaii"] #advancedEditorPanel .titlebar-brand,
 :root[data-theme="kawaii"] #advancedEditorPanel .ae-brand {
   background: linear-gradient(90deg, #c07ab8 0%, #ff80b0 30%, #e8b4f8 55%, #ff80b0 80%, #c07ab8 100%);
@@ -2693,7 +2439,6 @@
 :root[data-theme="kawaii"] #advancedEditorPanel .titlebar-status,
 :root[data-theme="kawaii"] #advancedEditorPanel .ae-brand-sub { color: #c07ab8; }
 
-/* Inputs */
 :root[data-theme="kawaii"] #advancedEditorPanel input[type="text"],
 :root[data-theme="kawaii"] #advancedEditorPanel input[type="number"],
 :root[data-theme="kawaii"] #advancedEditorPanel select {
@@ -2711,7 +2456,6 @@
 :root[data-theme="kawaii"] #advancedEditorPanel input[readonly] { color: #c07ab8; }
 :root[data-theme="kawaii"] #advancedEditorPanel select option { background: #fff0f5; color: #7a3358; }
 
-/* Color input */
 :root[data-theme="kawaii"] #advancedEditorPanel input[type="color"] {
   border-color: rgba(255,150,190,0.4);
   background: rgba(255,240,250,0.7);
@@ -2721,7 +2465,6 @@
   box-shadow: 0 0 12px rgba(255,128,176,0.35);
 }
 
-/* Range sliders */
 :root[data-theme="kawaii"] #advancedEditorPanel input[type="range"]::-webkit-slider-track {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 45%, rgba(255,150,190,0.18) 100%),
@@ -2763,13 +2506,11 @@
   border-color: rgba(255,220,235,0.9);
 }
 
-/* Labels */
 :root[data-theme="kawaii"] #advancedEditorPanel label.field-label { color: #c07ab8; }
 :root[data-theme="kawaii"] #advancedEditorPanel .adj-label { color: #b06a8f; }
 :root[data-theme="kawaii"] #advancedEditorPanel .adj-val { color: #ff80b0; }
 :root[data-theme="kawaii"] #advancedEditorPanel .adj-row:hover { background: rgba(255,128,176,0.07); }
 
-/* Buttons */
 :root[data-theme="kawaii"] #advancedEditorPanel button {
   border-color: rgba(255,150,190,0.4);
   background: linear-gradient(135deg, rgba(255,230,242,0.85) 0%, rgba(232,200,248,0.6) 100%);
@@ -2829,7 +2570,6 @@
   box-shadow: 0 0 18px rgba(76,175,125,0.28);
 }
 
-/* Tabs (inner) */
 :root[data-theme="kawaii"] #advancedEditorPanel .tabs {
   background: rgba(255,210,230,0.3);
   border-radius: 12px;
@@ -2846,7 +2586,6 @@
   box-shadow: 0 2px 8px rgba(255,128,176,0.2);
 }
 
-/* Preset tiles */
 :root[data-theme="kawaii"] #advancedEditorPanel .preset-tile {
   background: linear-gradient(135deg, rgba(255,235,245,0.75) 0%, rgba(232,210,248,0.5) 100%);
   border-color: rgba(255,150,190,0.28);
@@ -2864,7 +2603,6 @@
 :root[data-theme="kawaii"] #advancedEditorPanel .preset-name { color: #b06a8f; }
 :root[data-theme="kawaii"] #advancedEditorPanel .preset-size { color: #d9a8c2; }
 
-/* Format chips (advanced) */
 :root[data-theme="kawaii"] #advancedEditorPanel .format-chip {
   background: rgba(255,235,245,0.75);
   border-color: rgba(255,150,190,0.3);
@@ -2882,7 +2620,6 @@
   box-shadow: 0 0 12px rgba(255,128,176,0.25);
 }
 
-/* Swatches */
 :root[data-theme="kawaii"] #advancedEditorPanel .swatch {
   border-color: rgba(255,150,190,0.32);
 }
@@ -2895,7 +2632,6 @@
   box-shadow: 0 0 18px rgba(255,128,176,0.45);
 }
 
-/* Canvas wrap */
 :root[data-theme="kawaii"] #advancedEditorPanel .canvas-wrap {
   background: repeating-conic-gradient(rgba(255,128,176,0.08) 0% 25%, rgba(255,240,250,0.5) 0% 50%) 0 0 / 16px 16px;
   border-color: rgba(255,150,190,0.25);
@@ -2911,13 +2647,11 @@
 }
 :root[data-theme="kawaii"] #advancedEditorPanel .canvas-overlay-empty { color: #e8c4d8; }
 
-/* Status bar */
 :root[data-theme="kawaii"] #advancedEditorPanel .status-bar { color: #c07ab8; }
 :root[data-theme="kawaii"] #advancedEditorPanel .status-bar[data-tone="success"] { color: #4caf7d; }
 :root[data-theme="kawaii"] #advancedEditorPanel .status-bar[data-tone="error"]   { color: #e0557a; }
 :root[data-theme="kawaii"] #advancedEditorPanel .status-bar[data-tone="info"]    { color: #9b6bd4; }
 
-/* Toggle */
 :root[data-theme="kawaii"] #advancedEditorPanel .toggle-track {
   background: rgba(255,210,230,0.55);
   border-color: rgba(255,150,190,0.32);
@@ -2930,12 +2664,10 @@
 }
 :root[data-theme="kawaii"] #advancedEditorPanel .toggle input:checked + .toggle-track::before { background: #fff; }
 
-/* Section sep */
 :root[data-theme="kawaii"] #advancedEditorPanel .section-sep {
   background: linear-gradient(90deg, rgba(255,150,190,0.12) 0%, rgba(255,128,176,0.3) 50%, rgba(255,150,190,0.12) 100%);
 }
 
-/* Badges */
 :root[data-theme="kawaii"] #advancedEditorPanel .badge-purple {
   background: rgba(232,180,248,0.28);
   color: #9b55cc;
@@ -2947,7 +2679,6 @@
   border-color: rgba(255,200,100,0.28);
 }
 
-/* Filter strip */
 :root[data-theme="kawaii"] #advancedEditorPanel .filter-strip::-webkit-scrollbar-thumb { background: rgba(255,150,190,0.4); }
 :root[data-theme="kawaii"] #advancedEditorPanel .filter-tile:hover {
   border-color: rgba(255,128,176,0.45);
@@ -2959,7 +2690,6 @@
 }
 :root[data-theme="kawaii"] #advancedEditorPanel .filter-tile-name { color: #c07ab8; }
 
-/* Rotation ring */
 :root[data-theme="kawaii"] #advancedEditorPanel .rotation-ring {
   border-color: rgba(255,150,190,0.4);
   background: radial-gradient(circle, rgba(255,128,176,0.12) 0%, transparent 70%);
@@ -2975,7 +2705,6 @@
 }
 :root[data-theme="kawaii"] #advancedEditorPanel .rotation-val { color: #e8b4f8; }
 
-/* Flip buttons */
 :root[data-theme="kawaii"] #advancedEditorPanel .flip-btn {
   background: linear-gradient(135deg, rgba(255,230,242,0.8) 0%, rgba(232,200,248,0.55) 100%);
   border-color: rgba(255,150,190,0.35);
@@ -2988,7 +2717,6 @@
   color: #5c1f3a;
 }
 
-/* Budget */
 :root[data-theme="kawaii"] #advancedEditorPanel .budget-bar-wrap {
   background: rgba(255,220,235,0.45);
   border-color: rgba(255,150,190,0.22);
@@ -3012,14 +2740,9 @@
 :root[data-theme="kawaii"] #advancedEditorPanel .budget-tier-limit { color: #d9a8c2; }
 :root[data-theme="kawaii"] #advancedEditorPanel .budget-tier-size { color: #b06a8f; }
 
-/* Tips */
 :root[data-theme="kawaii"] #advancedEditorPanel .tip-warn { color: #a06010; }
 :root[data-theme="kawaii"] #advancedEditorPanel .tip-info { color: #9b6bd4; }
 :root[data-theme="kawaii"] #advancedEditorPanel .tip-good { color: #4caf7d; }
-
-/* ══════════════════════════════════════════════════════════════════
-   KAWAII — WCP (Custom Colour Picker) override
-   ══════════════════════════════════════════════════════════════════ */
 
 :root[data-theme="kawaii"] .wcp-trigger {
   background: rgba(255,240,250,0.88);
@@ -3067,10 +2790,6 @@
 :root[data-theme="kawaii"] .wcp-preset { border-color: rgba(255,150,190,0.25); }
 :root[data-theme="kawaii"] .wcp-preset:hover { border-color: rgba(255,100,160,0.5); }
 
-/* ══════════════════════════════════════════════════════════════════
-   KAWAII — Theme switcher popover override
-   ══════════════════════════════════════════════════════════════════ */
-
 :root[data-theme="kawaii"] .theme-trigger {
   background: linear-gradient(135deg, rgba(255,230,242,0.8) 0%, rgba(232,200,248,0.5) 100%);
   border-color: rgba(255,150,190,0.45);
@@ -3094,7 +2813,6 @@
 :root[data-theme="kawaii"] .theme-option-name { color: #7a3358; }
 :root[data-theme="kawaii"] .theme-option-blurb { color: #c07ab8; }
 
-/* Modal */
 :root[data-theme="kawaii"] .theme-modal {
   background: linear-gradient(135deg, #fff0f5 0%, #ffe3ef 100%);
   border-color: rgba(255,150,190,0.5);
@@ -3118,7 +2836,6 @@
 :root[data-theme="kawaii"] .theme-modal-btn--confirm:hover { filter: brightness(1.1); }
 :root[data-theme="kawaii"] .theme-modal-btn--confirm:focus-visible { box-shadow: 0 0 0 2px rgba(255,100,160,0.5); }
 
-/* ── Coverage completion: elements the full retheme above missed ── */
 :root[data-theme="kawaii"] .gear-btn { color: #c07ab8; background: rgba(255,150,190,0.08); }
 :root[data-theme="kawaii"] .gear-btn:hover { color: #8a3a6e; background: rgba(255,150,190,0.16); border-color: rgba(255,150,190,0.4); }
 :root[data-theme="kawaii"] .gear-btn[aria-pressed="true"] { background: rgba(255,128,176,0.22); border-color: rgba(255,128,176,0.4); }
@@ -3132,21 +2849,12 @@
 :root[data-theme="kawaii"] .wcp-preview-before::after { color: rgba(140,60,110,0); }
 :root[data-theme="kawaii"] .wcp-preview-before:hover::after { color: rgba(140,60,110,0.7); }
 
-/* ══════════════════════════════════════════════════════════════════
-   DISCORD FULL RETHEME — Exact Discord dark mode recreation
-   Primary:   #313338  Surface:   #2b2d31  Dark:      #1e1f22
-   Elevated:  #383a40  Blurple:   #5865f2  Text:      #dbdee1
-   Muted:     #949ba4  Dim:       #6d6f78
-   Font: "gg sans", "Noto Sans", Helvetica Neue, Helvetica, Arial
-   ══════════════════════════════════════════════════════════════════ */
-
 :root[data-theme="discord"] body {
   font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: #313338;
   background-image: none;
 }
 
-/* ── Titlebar ── */
 :root[data-theme="discord"] .titlebar {
   background: #1e1f22;
   border-bottom: 1px solid rgba(0,0,0,0.35);
@@ -3163,7 +2871,6 @@
 :root[data-theme="discord"] .titlebar-sep { background: rgba(255,255,255,0.08); }
 :root[data-theme="discord"] #titlebarStatus { color: #949ba4; font-size: 13px; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; }
 
-/* ── Main tabs ── */
 :root[data-theme="discord"] .main-tabs {
   border-bottom: 2px solid #1e1f22;
   background: #2b2d31;
@@ -3184,7 +2891,6 @@
 :root[data-theme="discord"] .tab-button::after { background: #5865f2; height: 2px; border-radius: 0; bottom: -2px; }
 :root[data-theme="discord"] .tab-button[data-tab="advanced"]::after { bottom: -2px; }
 
-/* ── Preview wrap ── */
 :root[data-theme="discord"] .preview-wrap {
   background: #1e1f22;
   border: 1px solid rgba(0,0,0,0.3);
@@ -3205,7 +2911,6 @@
 :root[data-theme="discord"] .preview-image { border-radius: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
 :root[data-theme="discord"] .preview-meta { color: #6d6f78; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 11px; }
 
-/* ── Buttons ── */
 :root[data-theme="discord"] .btn {
   background: #4e5058;
   border: none;
@@ -3225,7 +2930,6 @@
 :root[data-theme="discord"] .btn-primary { background: #5865f2; border-radius: 3px; box-shadow: none; }
 :root[data-theme="discord"] .btn-primary:hover:not(:disabled) { background: #4752c4; box-shadow: none; }
 
-/* ── Inputs ── */
 :root[data-theme="discord"] .input {
   background: #1e1f22;
   border: none;
@@ -3242,7 +2946,6 @@
 :root[data-theme="discord"] .input:focus { box-shadow: inset 0 0 0 1px #5865f2, 0 0 0 2px rgba(88,101,242,0.25); outline: none; }
 :root[data-theme="discord"] .input[readonly] { color: #949ba4; }
 
-/* ── Labels ── */
 :root[data-theme="discord"] .field-label {
   color: #b5bac1;
   font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -3252,51 +2955,40 @@
   letter-spacing: 0.02em;
 }
 
-/* ── Status bar ── */
 :root[data-theme="discord"] .status-bar { color: #949ba4; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; }
 :root[data-theme="discord"] .status-bar[data-tone="success"] { color: #23a55a; }
 :root[data-theme="discord"] .status-bar[data-tone="error"]   { color: #f23f42; }
 :root[data-theme="discord"] .status-bar[data-tone="warn"]    { color: #f0b232; }
 
-/* ── Section divider ── */
 :root[data-theme="discord"] .section-divider-label { color: #949ba4; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
 :root[data-theme="discord"] .section-divider-line { background: rgba(0,0,0,0.3); }
 
-/* ── Toggle ── */
 :root[data-theme="discord"] .toggle-slider { background: #4e5058; border-color: transparent; }
 :root[data-theme="discord"] .toggle-slider::before { background: #fff; }
 :root[data-theme="discord"] .toggle-switch input:checked + .toggle-slider { background: #23a55a; box-shadow: none; border-color: transparent; }
 :root[data-theme="discord"] .toggle-switch input:checked + .toggle-slider::before { background: #fff; }
 
-/* ── Warn callout ── */
 :root[data-theme="discord"] .warn-callout { background: rgba(240,178,50,0.06); border-color: rgba(240,178,50,0.22); color: #dbdee1; }
 :root[data-theme="discord"] .warn-callout-close { color: #6d6f78; }
 :root[data-theme="discord"] .warn-callout-close:hover { opacity: 1; background: rgba(240,178,50,0.16); }
 :root[data-theme="discord"] .warn-callout-close:focus-visible { outline: none; opacity: 1; box-shadow: 0 0 0 2px rgba(240,178,50,0.5); }
 
-/* ── Format chips (framer/converter) ── */
 :root[data-theme="discord"] .format-chip { background: #383a40; border-color: transparent; color: #dbdee1; border-radius: 3px; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 13px; font-weight: 500; }
 :root[data-theme="discord"] .format-chip:hover { background: #4e5058; color: #fff; border-color: transparent; }
 :root[data-theme="discord"] .format-chip.active { background: #5865f2; border-color: transparent; color: #fff; box-shadow: none; }
 
-/* ── Quality slider ── */
 :root[data-theme="discord"] .quality-slider::-webkit-slider-thumb { border-color: #5865f2; background: #fff; }
 :root[data-theme="discord"] .quality-slider::-moz-range-thumb { border-color: #5865f2; background: #fff; }
 :root[data-theme="discord"] .quality-val { color: #dbdee1; }
 
-/* ── GIF note ── */
 :root[data-theme="discord"] .gif-note { background: rgba(88,101,242,0.07); border-color: rgba(88,101,242,0.2); color: #949ba4; }
 :root[data-theme="discord"] .gif-note-close { color: #949ba4; }
 :root[data-theme="discord"] .gif-note-close:hover { opacity: 1; background: rgba(88,101,242,0.18); }
 
-/* ── Converter select ── */
 :root[data-theme="discord"] .conv-format-select { background: #1e1f22; border: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35); color: #dbdee1; border-radius: 3px; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; }
 :root[data-theme="discord"] .conv-format-select:focus { box-shadow: inset 0 0 0 1px #5865f2; outline: none; }
 :root[data-theme="discord"] .conv-format-select option { background: #2b2d31; color: #dbdee1; }
 
-/* ══════════════════════════════════════════════════════════════════
-   DISCORD — Advanced Editor Panel
-   ══════════════════════════════════════════════════════════════════ */
 :root[data-theme="discord"] #advancedEditorPanel .card { background: #2b2d31; border-color: rgba(0,0,0,0.25); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
 :root[data-theme="discord"] #advancedEditorPanel .card:hover { background: #2e3035; border-color: rgba(0,0,0,0.4); }
 :root[data-theme="discord"] #advancedEditorPanel .card-header { background: #2b2d31; border-bottom-color: rgba(0,0,0,0.25); }
@@ -3354,8 +3046,6 @@
 }
 :root[data-theme="discord"] #advancedEditorPanel .titlebar-status { color: #949ba4; }
 
-/* Sample-preset swatch: hardcodes its own fill regardless of theme,
-   so this needs !important to win over that inline color */
 :root[data-theme="discord"] #advancedEditorPanel .preset-thumb {
   background: #5865f2 !important;
 }
@@ -3452,7 +3142,6 @@
 :root[data-theme="discord"] #advancedEditorPanel .tip-info { color: #949cf7; }
 :root[data-theme="discord"] #advancedEditorPanel .tip-good { color: #23a55a; }
 
-/* ═══ Discord — WCP colour picker ═══ */
 :root[data-theme="discord"] .wcp-trigger { background: #2b2d31; border-color: rgba(0,0,0,0.35); }
 :root[data-theme="discord"] .wcp-trigger:hover { border-color: #5865f2; }
 :root[data-theme="discord"] .wcp-hex-inline { color: #dbdee1; }
@@ -3466,7 +3155,6 @@
 :root[data-theme="discord"] .wcp-preset { border-color: rgba(0,0,0,0.3); border-radius: 3px; }
 :root[data-theme="discord"] .wcp-preset:hover { border-color: #5865f2; }
 
-/* ═══ Discord — Theme switcher ═══ */
 :root[data-theme="discord"] .theme-trigger { background: #383a40; border-color: rgba(0,0,0,0.35); color: #dbdee1; border-radius: 3px; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; }
 :root[data-theme="discord"] .theme-trigger:hover { background: #4e5058; border-color: rgba(0,0,0,0.5); color: #fff; }
 :root[data-theme="discord"] .theme-popover { background: #111214; border-color: rgba(0,0,0,0.6); box-shadow: 0 8px 28px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.4); border-radius: 4px; }
@@ -3475,18 +3163,15 @@
 :root[data-theme="discord"] .theme-option-name { color: #dbdee1; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 500; }
 :root[data-theme="discord"] .theme-option-blurb { color: #6d6f78; }
 
-/* ── Gear button ── */
 :root[data-theme="discord"] .gear-btn { color: #5865f2; }
 :root[data-theme="discord"] .gear-btn:hover { background: rgba(88,101,242,0.12); }
 :root[data-theme="discord"] .gear-btn[aria-pressed="true"] { background: rgba(88,101,242,0.18); color: #5865f2; }
 :root[data-theme="discord"] .gear-btn svg path { fill: #5865f2; }
 :root[data-theme="discord"] .gear-btn:hover svg path { fill: #949cf7; }
 
-/* ── Advanced panel ── */
 :root[data-theme="discord"] .advanced-panel { background: #2b2d31; border-color: rgba(0,0,0,0.3); border-radius: 6px; }
 :root[data-theme="discord"] .advanced-label { color: #dbdee1; font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif; }
 
-/* ── Coverage completion: elements the full retheme above missed ── */
 :root[data-theme="discord"] .titlebar-status { color: #949ba4; }
 :root[data-theme="discord"] .theme-flashbang { background: #ffffff; }
 :root[data-theme="discord"] .theme-modal { background: #111214; border-color: rgba(0,0,0,0.5); }
@@ -3510,10 +3195,6 @@
 :root[data-theme="discord"] .wcp-cursor { border-color: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.5); }
 :root[data-theme="discord"] .wcp-preview-before::after { color: rgba(255,255,255,0); }
 :root[data-theme="discord"] .wcp-preview-before:hover::after { color: rgba(255,255,255,0.75); }
-
-/* ══════════════════════════════════════════════════════════════════
-   EDGELORD — Flowing animated dark-red / black gradient
-   ══════════════════════════════════════════════════════════════════ */
 
 @keyframes gothicFlow {
   0%   { background-position: 0% 50%, 100% 0%, 0% 100%, 0% 50%; }
@@ -3545,7 +3226,6 @@
   image-rendering: auto;
 }
 
-/* Make UI surfaces semi-transparent so the gradient bleeds through */
 :root[data-theme="gothic"] .titlebar {
   background: rgba(5,0,0,0.88);
   border-bottom: 1px solid rgba(139,0,0,0.3);
@@ -3579,7 +3259,6 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Advanced Editor cards */
 :root[data-theme="gothic"] #advancedEditorPanel .card {
   background: rgba(12,2,2,0.78);
   border-color: rgba(128,0,0,0.32);
@@ -3612,9 +3291,6 @@
   50%       { background-position: 100% 50%; }
 }
 
-/* ── Closing remaining strict red/black gaps: inputs, range sliders,
-   base buttons, format chips, canvas drop zone, status tones — these
-   still fell back to Original's violet/green/gold ── */
 :root[data-theme="gothic"] #advancedEditorPanel .titlebar-brand {
   background: linear-gradient(90deg, #fafafa 0%, #ff9999 35%, #800000 60%, #fafafa 100%);
   background-size: 220% 100%;
@@ -3727,13 +3403,10 @@
 :root[data-theme="gothic"] #advancedEditorPanel .status-bar[data-tone="success"] { color: #ff9999; }
 :root[data-theme="gothic"] #advancedEditorPanel .status-bar[data-tone="error"] { color: #ff2b2b; }
 
-/* Sample-preset swatch: hardcodes its own fill regardless of theme,
-   so this needs !important to win over that inline color */
 :root[data-theme="gothic"] #advancedEditorPanel .preset-thumb {
   background: linear-gradient(135deg, #800000, #4a0000) !important;
 }
 
-/* Buttons — blood-red primary */
 :root[data-theme="gothic"] #advancedEditorPanel button.primary {
   background: linear-gradient(135deg, rgba(139,0,0,0.65) 0%, rgba(80,0,0,0.5) 100%);
   border-color: rgba(200,0,0,0.5);
@@ -3752,12 +3425,10 @@
   animation-play-state: paused;
 }
 
-/* Scrollbar */
 :root[data-theme="gothic"] ::-webkit-scrollbar-track { background: rgba(0,0,0,0.4); }
 :root[data-theme="gothic"] ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(139,0,0,0.7), rgba(80,0,0,0.5)); border-radius: 999px; }
 :root[data-theme="gothic"] ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, rgba(200,0,0,0.8), rgba(120,0,0,0.65)); }
 
-/* Theme popover */
 :root[data-theme="gothic"] .theme-popover {
   background: rgba(8,0,0,0.95);
   border-color: rgba(128,0,0,0.5);
@@ -3770,7 +3441,6 @@
 :root[data-theme="gothic"] .theme-option-name { color: #d8b8b8; }
 :root[data-theme="gothic"] .theme-option-blurb { color: #8a5a5a; }
 
-/* WCP picker */
 :root[data-theme="gothic"] .wcp-popover {
   background: rgba(10,0,0,0.96);
   border-color: rgba(128,0,0,0.45);
@@ -3787,7 +3457,6 @@
   background: repeating-conic-gradient(rgba(20,2,2,0.9) 0% 25%, rgba(8,0,0,0.85) 0% 50%) 0 0 / 16px 16px;
 }
 
-/* Tabs */
 :root[data-theme="gothic"] #advancedEditorPanel .tabs {
   background: rgba(8,0,0,0.65);
   border-radius: 4px;
@@ -3799,12 +3468,10 @@
   box-shadow: 0 0 12px rgba(139,0,0,0.25);
 }
 
-/* Preset tiles */
 :root[data-theme="gothic"] #advancedEditorPanel .preset-tile { background: rgba(20,4,4,0.7); }
 :root[data-theme="gothic"] #advancedEditorPanel .preset-tile:hover { background: rgba(35,5,5,0.8); border-color: rgba(128,0,0,0.45); box-shadow: 0 4px 12px rgba(139,0,0,0.2); }
 :root[data-theme="gothic"] #advancedEditorPanel .preset-tile.selected { background: rgba(90,0,0,0.25); border-color: rgba(200,0,0,0.55); box-shadow: 0 0 16px rgba(139,0,0,0.28); }
 
-/* Format chips */
 :root[data-theme="gothic"] #advancedEditorPanel .format-chip.selected {
   background: linear-gradient(135deg, rgba(139,0,0,0.4), rgba(80,0,0,0.3));
   border-color: rgba(180,0,0,0.55);
@@ -3812,13 +3479,11 @@
   box-shadow: 0 0 12px rgba(139,0,0,0.28);
 }
 
-/* Budget bar */
 :root[data-theme="gothic"] #advancedEditorPanel .budget-bar {
   background: linear-gradient(90deg, #800000, #cc0000, #800000);
   box-shadow: 0 0 8px rgba(128,0,0,0.4);
 }
 
-/* Rotation handle */
 :root[data-theme="gothic"] #advancedEditorPanel .rotation-handle::before {
   background: #cc0000;
   box-shadow: 0 0 10px rgba(200,0,0,0.7);
@@ -3832,12 +3497,6 @@
   box-shadow: inset 0 0 14px rgba(139,0,0,0.2), 0 0 18px rgba(139,0,0,0.3);
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   GOTHIC — Coverage completion (components the reskin above missed,
-   so nothing falls back to the default violet/blue "original" look)
-   ══════════════════════════════════════════════════════════════════ */
-
-/* Buttons */
 :root[data-theme="gothic"] .btn { border-color: rgba(128,0,0,0.4); background: rgba(20,4,4,0.6); color: #d8b8b8; }
 :root[data-theme="gothic"] .btn:hover { background: rgba(139,0,0,0.18); border-color: rgba(160,0,0,0.55); color: #ffb8b8; }
 :root[data-theme="gothic"] .btn:focus-visible { box-shadow: 0 0 0 2px rgba(200,0,0,0.4); }
@@ -3848,17 +3507,14 @@
 :root[data-theme="gothic"] #advancedEditorPanel button.success { background: rgba(255,80,80,0.08); border-color: rgba(255,80,80,0.3); color: #ff9999; }
 :root[data-theme="gothic"] #advancedEditorPanel button.success:hover:not(:disabled) { background: rgba(255,80,80,0.16); border-color: rgba(255,80,80,0.5); box-shadow: 0 0 16px rgba(255,80,80,0.22); }
 
-/* Titlebar / small labels */
 :root[data-theme="gothic"] .titlebar-brand { color: #ffb8b8; }
 :root[data-theme="gothic"] #advancedEditorPanel .titlebar-status { color: #8a5a5a; }
 :root[data-theme="gothic"] .ae-brand-sub { color: #8a5a5a; }
 :root[data-theme="gothic"] #advancedEditorPanel .card-subtitle { color: #7a4a4a; }
 
-/* Tabs */
 :root[data-theme="gothic"] .tab-button[aria-selected="true"] { color: #ffe8e8; }
 :root[data-theme="gothic"] .tab-button::after { background: #cc0000; }
 
-/* Inputs / selects */
 :root[data-theme="gothic"] .input,
 :root[data-theme="gothic"] .conv-format-select { background: rgba(15,2,2,0.75); border-color: rgba(128,0,0,0.35); color: #f0d8d8; }
 :root[data-theme="gothic"] .input:focus,
@@ -3872,14 +3528,12 @@
 :root[data-theme="gothic"] .gif-note-close { color: #ffb3b3; }
 :root[data-theme="gothic"] .gif-note-close:hover { opacity: 1; background: rgba(204,68,68,0.2); }
 
-/* Gear button */
 :root[data-theme="gothic"] .gear-btn { color: #7a4a4a; background: rgba(139,0,0,0.06); }
 :root[data-theme="gothic"] .gear-btn:hover { color: #d8b8b8; background: rgba(139,0,0,0.14); border-color: rgba(160,0,0,0.4); }
 :root[data-theme="gothic"] .gear-btn[aria-pressed="true"] { background: rgba(139,0,0,0.22); border-color: rgba(180,0,0,0.4); }
 :root[data-theme="gothic"] .gear-btn svg path { fill: #7a3a3a; }
 :root[data-theme="gothic"] .gear-btn:hover svg path { fill: #d8b8b8; }
 
-/* Advanced panel micro-labels */
 :root[data-theme="gothic"] #advancedEditorPanel .adj-label { color: #a17a7a; }
 :root[data-theme="gothic"] #advancedEditorPanel .adj-row:hover { background: rgba(139,0,0,0.07); }
 :root[data-theme="gothic"] #advancedEditorPanel .adj-val { color: #ff8888; }
@@ -3891,11 +3545,9 @@
   color: transparent;
 }
 
-/* Badges */
 :root[data-theme="gothic"] #advancedEditorPanel .badge-purple { background: rgba(139,0,0,0.2); color: #ffb8b8; border-color: rgba(139,0,0,0.35); }
 :root[data-theme="gothic"] #advancedEditorPanel .badge-yellow { background: rgba(204,68,68,0.15); color: #ffb3b3; border-color: rgba(204,68,68,0.25); }
 
-/* Budget tiers */
 :root[data-theme="gothic"] #advancedEditorPanel .budget-bar-wrap { background: rgba(10,0,0,0.6); border-color: rgba(139,0,0,0.2); }
 :root[data-theme="gothic"] #advancedEditorPanel .budget-tier { background: rgba(15,2,2,0.5); border-color: rgba(139,0,0,0.22); }
 :root[data-theme="gothic"] #advancedEditorPanel .budget-tier:hover { background: rgba(20,4,4,0.7); border-color: rgba(160,0,0,0.35); }
@@ -3906,24 +3558,19 @@
 :root[data-theme="gothic"] #advancedEditorPanel .budget-tier-name { color: #e0c0c0; }
 :root[data-theme="gothic"] #advancedEditorPanel .budget-tier-size { color: #a17a7a; }
 
-/* Canvas empty state */
 :root[data-theme="gothic"] #advancedEditorPanel .canvas-overlay-empty { color: #4a2020; }
 
-/* Filter strip / tiles */
 :root[data-theme="gothic"] #advancedEditorPanel .filter-strip::-webkit-scrollbar-thumb { background: #4a1010; }
 :root[data-theme="gothic"] #advancedEditorPanel .filter-tile:hover { border-color: rgba(200,0,0,0.35); box-shadow: 0 4px 12px rgba(139,0,0,0.2); }
 :root[data-theme="gothic"] #advancedEditorPanel .filter-tile.selected { border-color: #cc0000; box-shadow: 0 0 16px rgba(200,0,0,0.35); }
 :root[data-theme="gothic"] #advancedEditorPanel .filter-tile-name { color: #8a5a5a; }
 
-/* Flip button */
 :root[data-theme="gothic"] #advancedEditorPanel .flip-btn { background: rgba(15,2,2,0.6); border-color: rgba(139,0,0,0.22); }
 :root[data-theme="gothic"] #advancedEditorPanel .flip-btn:hover { background: rgba(20,4,4,0.85); border-color: rgba(180,0,0,0.4); box-shadow: 0 4px 12px rgba(139,0,0,0.2); color: #ffb8b8; }
 
-/* Preset grid */
 :root[data-theme="gothic"] #advancedEditorPanel .preset-name { color: #a17a7a; }
 :root[data-theme="gothic"] #advancedEditorPanel .preset-size { color: #6a3a3a; }
 
-/* Preview area */
 :root[data-theme="gothic"] .preview-empty-sub { color: #3a1a1a; }
 :root[data-theme="gothic"] .preview-image {
   background:
@@ -3935,40 +3582,31 @@
 :root[data-theme="gothic"] .preview-loading { background: rgba(10,0,0,0.82); color: #d8b8b8; }
 :root[data-theme="gothic"] .preview-meta { color: #a17a7a; background: linear-gradient(transparent, rgba(8,0,0,0.88)); }
 
-/* Progress */
 :root[data-theme="gothic"] .progress-label { color: #a17a7a; }
 :root[data-theme="gothic"] .progress-track { background: #1a0505; }
 
-/* Quality slider */
 :root[data-theme="gothic"] .quality-slider { background: linear-gradient(to right, #cc0000 0%, #cc0000 var(--pct,80%), #2a0505 var(--pct,80%)); }
 :root[data-theme="gothic"] .quality-slider::-webkit-slider-thumb { border-color: #cc0000; }
 :root[data-theme="gothic"] .quality-slider::-moz-range-thumb { border-color: #cc0000; }
 
-/* Rotation readout */
 :root[data-theme="gothic"] #advancedEditorPanel .rotation-val { color: #ff8888; }
 
-/* Section separator */
 :root[data-theme="gothic"] #advancedEditorPanel .section-sep { background: linear-gradient(90deg, rgba(139,0,0,0.08) 0%, rgba(139,0,0,0.25) 50%, rgba(139,0,0,0.08) 100%); }
 
-/* Spinner */
 :root[data-theme="gothic"] .spinner { border-color: #2a0505; border-top-color: #cc0000; }
 
-/* Status bar */
 :root[data-theme="gothic"] .status-bar { color: #8a5a5a; }
 :root[data-theme="gothic"] #advancedEditorPanel .status-bar { color: #6a3a3a; }
 :root[data-theme="gothic"] #advancedEditorPanel .status-bar[data-tone="info"] { color: #d8a8a8; }
 
-/* Swatches */
 :root[data-theme="gothic"] #advancedEditorPanel .swatch { border-color: rgba(139,0,0,0.3); }
 :root[data-theme="gothic"] #advancedEditorPanel .swatch:hover { border-color: rgba(200,0,0,0.55); box-shadow: 0 0 12px rgba(139,0,0,0.35); }
 :root[data-theme="gothic"] #advancedEditorPanel .swatch.selected { border-color: #cc0000; box-shadow: 0 0 16px rgba(200,0,0,0.45); }
 
-/* Tips */
 :root[data-theme="gothic"] #advancedEditorPanel .tip-good { color: #ff9999; }
 :root[data-theme="gothic"] #advancedEditorPanel .tip-info { color: #d8a8a8; }
 :root[data-theme="gothic"] #advancedEditorPanel .tip-warn { color: #ffb3b3; }
 
-/* Toggles */
 :root[data-theme="gothic"] .toggle-slider { background: #1a0505; border-color: rgba(139,0,0,0.2); }
 :root[data-theme="gothic"] .toggle-slider::before { background: #7a4a4a; }
 :root[data-theme="gothic"] .toggle-switch input:checked + .toggle-slider,
@@ -3978,14 +3616,11 @@
 :root[data-theme="gothic"] #advancedEditorPanel .toggle-track { background: rgba(15,2,2,0.8); border-color: rgba(139,0,0,0.2); }
 :root[data-theme="gothic"] #advancedEditorPanel .toggle-track::before { background: #7a4a4a; }
 
-/* Warn callout */
 :root[data-theme="gothic"] .warn-callout { background: rgba(204,68,68,0.1); border-color: rgba(204,68,68,0.3); }
 :root[data-theme="gothic"] .warn-callout-close { color: #ffb3b3; }
 :root[data-theme="gothic"] .warn-callout-close:hover { background: rgba(204,68,68,0.2); }
 :root[data-theme="gothic"] .warn-callout-close:focus-visible { outline: none; opacity: 1; box-shadow: 0 0 0 2px rgba(204,68,68,0.5); }
 
-/* ── Format chips (tab 1/2) — was missing entirely, chip fell back to
-   Original's blurple .active state ── */
 :root[data-theme="gothic"] .format-chip.active {
   background: linear-gradient(135deg, rgba(139,0,0,0.4) 0%, rgba(74,0,0,0.35) 100%);
   border-color: rgba(180,0,0,0.55);
@@ -3993,7 +3628,6 @@
   box-shadow: 0 0 0 1px rgba(139,0,0,0.2);
 }
 
-/* Theme switcher trigger / modal / flashbang */
 :root[data-theme="gothic"] .theme-trigger { border-color: rgba(139,0,0,0.3); background: rgba(20,4,4,0.5); }
 :root[data-theme="gothic"] .theme-trigger:hover { border-color: rgba(200,0,0,0.55); background: rgba(30,5,5,0.7); }
 :root[data-theme="gothic"] .theme-flashbang { background: #ffe8e8; }
@@ -4009,7 +3643,6 @@
 :root[data-theme="gothic"] .theme-modal-btn--confirm:hover { filter: brightness(1.2); }
 :root[data-theme="gothic"] .theme-modal-btn--confirm:focus-visible { box-shadow: 0 0 0 2px rgba(200,0,0,0.5); }
 
-/* Custom colour picker (WCP) */
 :root[data-theme="gothic"] .wcp-trigger { background: rgba(15,2,2,0.8); border-color: rgba(139,0,0,0.25); }
 :root[data-theme="gothic"] .wcp-trigger:hover { border-color: rgba(200,0,0,0.45); background: rgba(20,4,4,0.9); }
 :root[data-theme="gothic"] .wcp-trigger--open { border-color: rgba(200,0,0,0.6) !important; box-shadow: 0 0 0 3px rgba(139,0,0,0.18); }
@@ -4033,9 +3666,6 @@
 :root[data-theme="gothic"] .wcp-input-label { color: #6a3a3a; }
 :root[data-theme="gothic"] .wcp-preset { border-color: rgba(139,0,0,0.15); }
 :root[data-theme="gothic"] .wcp-preset:hover { border-color: rgba(200,0,0,0.4); box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
-
-
-
 
 .theme-popover .theme-option:nth-of-type(1) .theme-option-swatch { background: #5865f2; }
 .theme-popover .theme-option:nth-of-type(1):hover { background: rgba(88,101,242,0.18); }
