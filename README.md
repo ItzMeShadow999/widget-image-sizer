@@ -17,7 +17,7 @@ A lightweight, blazing-fast browser utility designed to format, convert, and opt
 
 1. **Access the App:** Visit [𝚆.𝙸.𝚂 vercel](https://widgetimagestudio.vercel.app/) or [𝚆.𝙸.𝚂 cloudflare](https://widget-image-studio.shadow-164.workers.dev/) to use the tool instantly online, on whichever mirror is faster for you. Alternatively, clone the repository and spin up a local server to run it **FULLY OFFLINE** for total data privacy.
 2. **Process Your Assets:** Navigate to the specific functional tab required for your project (Framer, Converter, or Advanced Editor).
-3. **Pick a Theme:** Use the titlebar switcher to re-skin the whole app — Original, White Mode, Kawaii, Discord, or Gothic. Your pick is remembered next time you visit.
+3. **Pick a Theme:** Use the titlebar switcher to re-skin the whole app Original, White Mode, Kawaii, Discord, or Gothic. Your pick is remembered next time you visit.
 4. **Configure & Tweak:** Drop your target files in (or paste a direct image/video URL), tweak the custom parameters, and watch the real-time layout updates process inside your browser canvas.
 5. **Export:** Click the download trigger to compile and save your highly-optimized production assets locally.
 
@@ -27,7 +27,7 @@ A lightweight, blazing-fast browser utility designed to format, convert, and opt
 
 This utility is engineered completely in vanilla ECMAScript modules with zero third-party framework dependencies, running entirely client-side for immediate execution loops.
 
-Because it implements universal web standards and low-level canvas stream rendering, it can input absolutely **ANYTHING** you throw at it — handling web standards, legacy image data structures, and rare asset formats interchangeably without requiring external backend processing.
+Because it implements universal web standards and low-level canvas stream rendering, it can input absolutely **ANYTHING** you throw at it handling web standards, legacy image data structures, and rare asset formats interchangeably without requiring external backend processing.
 
 > [!NOTE]
 >This build serves its assets from the domain root (`/styles.css`, `/app.js`). If you're self-hosting from a subpath instead of the root, swap those two references back to relative paths (`./styles.css`, `./app.js`) before deploying.
@@ -85,6 +85,22 @@ Because it implements universal web standards and low-level canvas stream render
 
 <details>
   <summary>Patch Notes</summary>
+
+# PATCH NOTES // 2.7.2
+
+## [FIXED]
+
+* **Opera GX Support:** Animated WEBP encoding and decoding now works fully in Opera GX. The built-in ad/tracker blocker was silently killing all cross-origin dynamic `import()` calls to CDN-hosted WASM modules the engine never loaded and output was broken or empty.
+
+* **Inline WEBP Encoder Fallback:** When all CDN sources fail (Opera GX, strict CSP, network issues), the app now falls back to a pure-JS RIFF/WEBP muxer built directly into the bundle. No external download, nothing to block   animated WEBP output works regardless of network or browser policy.
+
+* **Inline WEBP Decoder Fallback:** Opera GX either lacks or silently breaks the `ImageDecoder` API. Frame decoding now falls back to a pure-JS RIFF byte parser that extracts each `ANMF` chunk and renders it via a plain `<img>` element, no browser API required.
+
+* **Corrupt ANMF Frame Layout:** The inline encoder was writing the X and Y offset fields of each `ANMF` chunk as 4-byte `uint32` values instead of the spec-required 3-byte `uint24`. This shifted every subsequent field (width, height, duration, flags) by one byte, producing scrambled or solid-colour output frames. Fixed to the correct 3-byte encoding.
+
+* **Truncated Alpha Frames:** `frameToVP8Bytes` was stopping at the first matching chunk (`ALPH` or `VP8`), dropping the other. Frames with transparency require both chunks `ALPH` + `VP8` to be present. Fixed to collect and merge all frame chunks before writing to the ANMF payload.
+
+---
   
  # PATCH NOTES // 2.7.1
  
