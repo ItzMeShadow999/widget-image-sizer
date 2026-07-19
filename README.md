@@ -28,6 +28,8 @@ Because it implements universal web standards and low-level canvas stream render
 
 > [!NOTE]
 >This build serves its assets from the domain root (`/styles.css`, `/app.js`). If you're self-hosting from a subpath instead of the root, swap those two references back to relative paths (`./styles.css`, `./app.js`) before deploying.
+>
+>**Update (2.7.4):** `app.js` is now loaded as a classic script from a relative path (`./app.js`) by default see the patch note below. `styles.css` is still served from the domain root (`/styles.css`). If you're self-hosting from a subpath, you only need to swap the stylesheet reference back to a relative path now; the script reference is already relative.
 
 **Need Help?** If you run into any setup failures or technical processing bugs, feel free to DM **[Shadow](https://discord.com/users/1065604516399026176)** directly on Discord.
 
@@ -83,11 +85,26 @@ Because it implements universal web standards and low-level canvas stream render
 <details>
   <summary>Patch Notes</summary>
   
+# PATCH NOTES // 2.7.4
+
+## [FIXED]
+* **Widget Framer Cut-Off Output:** Previously, changing the `Top Strip` / `Radius` values on a source image whose dimensions didn't match the expected 512x512 widget size would cut off part of the image in the generated output instead of framing it properly. The framer now forces the output to the correct target size with no cropping/cut-off, regardless of the original image's dimensions.
+
+## [CHANGED]
+* **`app.js` Script Loading:** The `app.js` include is no longer declared as an ES module (`type="module"`) and no longer loads from the domain root. It now loads as a standard classic script from a relative path (`./app.js`), matching the rest of the local asset references.
+
+## [NOTE]
+* This changes script execution order: `app.js` now runs immediately as the parser reaches it, instead of being deferred until after the document finishes parsing. In practice this means `app.js` now executes *before* the inline colour-picker and warning-callout `<script>` blocks further down the page, rather than after them.
+* Top-level declarations in `app.js` (e.g. `REFERENCE_SIZE`, `u16`, `u32`, `i32`, `modernGifPromise`, `webpEncoderPromise`, `tabButtons`) are no longer confined to module scope and now attach to the global `window` object.
+* `styles.css` is unaffected and still loads from the domain root (`/styles.css`); see the updated note above.
+
+---
+
 # PATCH NOTES // 2.7.3
 
 ## [FIXED]
 
-Widget Effect Top Strip Squish: applyWidgetEffect was cropping the top strip using the 5-argument form of drawImage, which only controls destination placement/size — with no way to also crop the source, the entire image got squashed into the shorter remaining height. Switched to the 9-argument form to crop the source at the strip boundary and draw it 1:1 on the canvas, so the image below the strip renders full-size and undistorted, with the radius cutout clipping correctly against it.
+Widget Effect Top Strip Squish: applyWidgetEffect was cropping the top strip using the 5-argument form of drawImage, which only controls destination placement/size with no way to also crop the source, the entire image got squashed into the shorter remaining height. Switched to the 9-argument form to crop the source at the strip boundary and draw it 1:1 on the canvas, so the image below the strip renders full-size and undistorted, with the radius cutout clipping correctly against it.
 
 ---
 
