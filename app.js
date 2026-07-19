@@ -1000,6 +1000,7 @@ document.querySelectorAll(".warn-callout-close").forEach((btn) => {
   function setTitlebarMessage(message) {
     refs.status.textContent = "";
     refs.status.dataset.tone = "neutral";
+
     titlebarStatus.textContent = message;
   }
 
@@ -1046,11 +1047,7 @@ document.querySelectorAll(".warn-callout-close").forEach((btn) => {
 
   function applyWidgetEffect(context, width, height, finalTopStrip, finalRadius, source) {
     context.clearRect(0, 0, width, height);
-    // Crop away the top strip from the source, then draw the remaining pixels
-    // at their correct destination size so the image is never squished.
-    // drawImage(source, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-    const srcHeight = height - finalTopStrip;
-    context.drawImage(source, 0, finalTopStrip, width, srcHeight, 0, finalTopStrip, width, srcHeight);
+    context.drawImage(source, 0, finalTopStrip, width, height - finalTopStrip);
 
     if (finalRadius > 0) {
       context.save();
